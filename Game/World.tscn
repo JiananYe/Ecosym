@@ -19,7 +19,7 @@ func _input(event):
 			else:
 				dragging = false
 		elif event is InputEventMouseMotion and dragging and Input.is_action_pressed(\"sub_click\"):
-			position = get_global_mouse_position()
+			position = get_global_mouse_position() - OS.get_window_size()/2
 			print(position)
 "
 
@@ -36,22 +36,21 @@ cell_size = Vector2( 120, 104 )
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 cell_half_offset = 0
 format = 1
-tile_data = PoolIntArray( 65538, 8, 0, 65539, 8, 0 )
+tile_data = PoolIntArray( 131074, 0, 0, 131075, 0, 0, 196609, 0, 0, 196610, 0, 0, 196613, 0, 0 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
-position = Vector2( 512, 300 )
 script = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="KinematicBody2D/CollisionShape2D"]
+anchor_mode = 0
 current = true
 smoothing_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="TileView" parent="CanvasLayer" instance=ExtResource( 3 )]
-visible = false
 margin_right = 150.0
 margin_bottom = 150.0

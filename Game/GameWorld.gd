@@ -25,7 +25,7 @@ func setup() -> void:
 	var map_size_px = (size_units+Vector2(0.5,0)) * _tilemap.cell_size
 	#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_2D,SceneTree.STRETCH_ASPECT_KEEP,map_size_px+Vector2(CUSTOM_OFFSET_X,CUSTOM_OFFSET_Y))
 	#generate()
-	generate_simplex()
+	#generate_simplex()
 	
 func generate() -> void:
 	emit_signal("started")
@@ -76,49 +76,47 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.pressed and not $CanvasLayer/TileView.visible and Input.is_action_pressed("main_click"):
 			var pos = event.position
-			var camera_pos = $KinematicBody2D/CollisionShape2D/Camera2D.position
-			var tile_pos = pixel_to_pointy_hex(pos) # - pixel_to_pointy_hex(camera_pos)
-			var tile_image = _tilemap.get_cell(tile_pos.x, tile_pos.y)
-			print("tile_pos",tile_pos)
-			$CanvasLayer/TileView.visible = true
+			var camera_pos = $KinematicBody2D.position
+			var tile_pos = getSelectedHexagon(pos + camera_pos)
+			var tile_index = _tilemap.get_cell(tile_pos.x, tile_pos.y)
+			print(pos,"tile_pos",tile_pos)
+			#$CanvasLayer/TileView.visible = true
 			$CanvasLayer/TileView/Background/Content/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
-			#$TileView/TextureRect/VBoxContainer/HBoxContainer/VBoxContainer/TextureRect.texture = 
+			#Debug Hex Cells
+			$Navigation2D/TileMap.set_cell(tile_pos.x,tile_pos.y,tile_index+1)
 
-
-
-func pixel_to_pointy_hex(point):
-	var q = (sqrt(3)/3 * point.x  -  1/3 * point.y) / _tilemap.cell_size.x
-	var r = (2/3 * point.y) / _tilemap.cell_size.y
-	print("point ", point, "hex ", q ,r, (2/3 * point.y))
-	return Vector2(q,r)
+func getSelectedHexagon(pos):
+	var gridHeight = $Navigation2D/TileMap.cell_size.y
+	var gridWidth = $Navigation2D/TileMap.cell_size.x
+	var halfWidth = gridWidth/2
+	var c = 140 - gridHeight
+	var m = float(c)/halfWidth
+	var y = pos.y
+	var x = pos.x
+	var row = _tilemap.world_to_map(pos).y#int(y / gridHeight)
+	var column
+	var rowIsOdd = abs(fmod(row,2)) == 1;
 	
-func hex_round(hex):
-	return cube_to_axial(cube_round(axial_to_cube(hex)))
+	column = _tilemap.world_to_map(pos).x
 	
-func cube_round(cube):
-	var rx = round(cube.x)
-	var ry = round(cube.y)
-	var rz = round(cube.z)
+	var relY = y - (row * gridHeight)
+	var relX
 	
-	var x_diff = abs(rx - cube.x)
-	var y_diff = abs(ry - cube.y)
-	var z_diff = abs(rz - cube.z)
-
-	if x_diff > y_diff and x_diff > z_diff:
-		rx = -ry-rz
-	else: if y_diff > z_diff:
-			ry = -rx-rz
+	if rowIsOdd:
+		relX = (x - (column * gridWidth)) - halfWidth
 	else:
-		rz = -rx-ry
-	return Vector3(rx, ry, rz)
-
-func cube_to_axial(cube):
-	var q = cube.x
-	var r = cube.z
-	return Vector2(q, r)
+		relX = x - (column * gridWidth)
 	
-func axial_to_cube(hex):
-	var x = hex.q
-	var z = hex.r
-	var y = -x-z
-	return Vector3(x, y, z)
+	print(relY, " ", -m,  " ", m, " ", relX, " ", c, " ", (-m * relX) + c, " ", (m * relX) - c, " ", _tilemap.world_to_map(pos))
+	if (relY < (-m * relX) + c):
+		row = row - 1
+		if !rowIsOdd:
+			column = column - 1
+			
+	else: if (relY < (m * relX) - c):
+		row = row - 1
+		if rowIsOdd:
+			column = column + 1
+	return Vector2(column,row);
+
+
