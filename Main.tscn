@@ -32,9 +32,9 @@ custom_fonts/font = ExtResource( 2 )
 text = "TITLE SCREEN"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_left = 279.0
+margin_left = 196.0
 margin_top = 160.0
-margin_right = 745.0
+margin_right = 827.0
 margin_bottom = 226.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
@@ -59,5 +59,13 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 custom_fonts/font = ExtResource( 2 )
 text = "REGISTER"
+
+[node name="TestButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 496.0
+margin_right = 631.0
+margin_bottom = 66.0
+custom_fonts/font = ExtResource( 2 )
+text = "TEST"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/LoginButton" to="." method="_on_LoginButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/RegisterButton" to="." method="_on_RegisterButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/TestButton" to="." method="_on_TestButton_pressed"]

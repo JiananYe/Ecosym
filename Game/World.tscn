@@ -1,8 +1,32 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Game/tileset/grass_tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Game/tileset/terrain_tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Game/GameWorld.gd" type="Script" id=2]
+[ext_resource path="res://Game/ui/TileView.tscn" type="PackedScene" id=3]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends KinematicBody2D
+var dragging = false
+
+func _ready():
+	set_process_input(true)
+
+func _input(event):
+	if not get_node(\"../CanvasLayer/TileView\").visible:
+		if event is InputEventMouseButton and Input.is_action_pressed(\"sub_click\"):
+			if event.is_pressed():
+				dragging = true
+			else:
+				dragging = false
+		elif event is InputEventMouseMotion and dragging and Input.is_action_pressed(\"sub_click\"):
+			position = get_global_mouse_position()
+			print(position)
+"
+
+[sub_resource type="CircleShape2D" id=1]
 
 [node name="World" type="Node2D"]
+script = ExtResource( 2 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
@@ -12,4 +36,21 @@ cell_size = Vector2( 120, 104 )
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 cell_half_offset = 0
 format = 1
-tile_data = PoolIntArray( -1, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 2, 0, 3, 4, 0, 4, 0, 0, 5, 4, 0, 6, 4, 0, 7, 0, 0, 8, 0, 0, 131071, 0, 0, 65536, 2, 0, 65537, 0, 0, 65538, 0, 0, 65539, 4, 0, 65540, 2, 0, 65541, 7, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 196607, 0, 0, 131072, 2, 0, 131073, 2, 0, 131074, 0, 0, 131075, 1, 0, 131076, 0, 0, 131077, 0, 0, 131078, 2, 0, 131079, 4, 0, 131080, 0, 0, 262143, 0, 0, 196608, 2, 0, 196609, 0, 0, 196610, 7, 0, 196611, 4, 0, 196612, 0, 0, 196613, 7, 0, 196614, 3, 0, 196615, 6, 0, 196616, 0, 0, 327679, 0, 0, 262144, 0, 0, 262145, 2, 0, 262146, 0, 0, 262147, 0, 0, 262148, 4, 0, 262149, 0, 0, 262150, 3, 0, 262151, 1, 0, 262152, 0, 0, 393215, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+position = Vector2( 512, 300 )
+script = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+shape = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="KinematicBody2D/CollisionShape2D"]
+current = true
+smoothing_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TileView" parent="CanvasLayer" instance=ExtResource( 3 )]
+visible = false
+margin_right = 150.0
+margin_bottom = 150.0
