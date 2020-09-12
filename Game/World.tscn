@@ -36,7 +36,6 @@ cell_size = Vector2( 120, 104 )
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 cell_half_offset = 0
 format = 1
-tile_data = PoolIntArray( 131074, 0, 0, 131075, 0, 0, 196609, 0, 0, 196610, 0, 0, 196613, 0, 0 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 script = SubResource( 1 )
@@ -52,5 +51,3 @@ smoothing_enabled = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="TileView" parent="CanvasLayer" instance=ExtResource( 3 )]
-margin_right = 150.0
-margin_bottom = 150.0

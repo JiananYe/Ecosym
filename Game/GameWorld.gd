@@ -16,7 +16,8 @@ we make in order for
 the tilemap's Mode , square to function as hex grids
 """
 const CUSTOM_OFFSET_X = 0
-const CUSTOM_OFFSET_Y = 36 
+const CUSTOM_OFFSET_Y = 36
+
 func _ready() -> void:
 	setup()
 	return
@@ -25,7 +26,7 @@ func setup() -> void:
 	var map_size_px = (size_units+Vector2(0.5,0)) * _tilemap.cell_size
 	#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_2D,SceneTree.STRETCH_ASPECT_KEEP,map_size_px+Vector2(CUSTOM_OFFSET_X,CUSTOM_OFFSET_Y))
 	#generate()
-	#generate_simplex()
+	generate_simplex()
 	
 func generate() -> void:
 	emit_signal("started")
@@ -80,10 +81,11 @@ func _input(event):
 			var tile_pos = getSelectedHexagon(pos + camera_pos)
 			var tile_index = _tilemap.get_cell(tile_pos.x, tile_pos.y)
 			print(pos,"tile_pos",tile_pos)
-			#$CanvasLayer/TileView.visible = true
-			$CanvasLayer/TileView/Background/Content/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
+			$CanvasLayer/TileView.popup()
+			$CanvasLayer/TileView/Content/Body/TileInfo/TileImage.texture = _tilemap.tile_set.tile_get_texture(tile_index)
+			$CanvasLayer/TileView/Content/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
 			#Debug Hex Cells
-			$Navigation2D/TileMap.set_cell(tile_pos.x,tile_pos.y,tile_index+1)
+			#$Navigation2D/TileMap.set_cell(tile_pos.x,tile_pos.y,tile_index+1)
 
 func getSelectedHexagon(pos):
 	var gridHeight = $Navigation2D/TileMap.cell_size.y
