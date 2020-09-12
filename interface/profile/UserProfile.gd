@@ -13,11 +13,13 @@ var profile := {
 
 func _ready() -> void:
 	Firebase.get_document("users/%s" % Firebase.user_info.id, http)
+	
+	#Firebase.get_document("test/%s" % "test2", http)
 
 
 func _on_HTTPRequest_request_completed(result: int, response_code: int, headers: PoolStringArray, body: PoolByteArray) -> void:
 	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
-	print(result_body)
+	print("http result ",result_body)
 	match response_code:
 		404:
 			notification.text = "Please, enter your information"
@@ -35,6 +37,7 @@ func _on_ConfirmButton_pressed() -> void:
 		notification.text = "Please, enter your nickname"
 		return
 	profile.nickname = { "stringValue": nickname.text }
+	print(profile)
 	match new_profile:
 		true:
 			Firebase.save_document("users?documentId=%s" % Firebase.user_info.id, profile, http)

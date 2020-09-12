@@ -4,17 +4,13 @@ signal started
 signal finished
 
 var _rng = RandomNumberGenerator.new()
+var d = {}
 
 onready var _tilemap = $Navigation2D/TileMap
 onready var _tile_view = preload("res://Game/ui/TileView.tscn")
 
 export var size_units = Vector2(32,18)
 
-"""
-this is the offsets with respect to the image size
-we make in order for
-the tilemap's Mode , square to function as hex grids
-"""
 const CUSTOM_OFFSET_X = 0
 const CUSTOM_OFFSET_Y = 36
 
@@ -27,7 +23,7 @@ func setup() -> void:
 	#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_2D,SceneTree.STRETCH_ASPECT_KEEP,map_size_px+Vector2(CUSTOM_OFFSET_X,CUSTOM_OFFSET_Y))
 	#generate()
 	generate_simplex()
-	
+
 func generate() -> void:
 	emit_signal("started")
 	_rng.randomize()    
@@ -46,31 +42,46 @@ func generate_simplex() -> void:
 	simplexNoise.octaves = 10
 	simplexNoise.period = 20.0
 	simplexNoise.persistence = 1
-	simplexNoise.lacunarity = 2   
+	simplexNoise.lacunarity = 2
 	for x in range(0,size_units.x):
+		d[x]= {"mapValue": {"fields":{}}}
 		for y in range(0,size_units.y):
 			var cell = get_random_tile_simplex(simplexNoise.get_noise_2d(x,y))
+			var value = {
+				"x": {"integerValue": x},
+				"y": {"integerValue": y},
+				"tile_index": {"integerValue": cell},
+				"ressource": {"integerValue": _rng.randi_range(0,9)},
+			}
+			d[x].mapValue.fields[y] = {
+				#"mapValue": {"fields":{
+					#y: {
+						"mapValue": {"fields": value}
+					#}
+				#}}
+			}
 			_tilemap.set_cell(x,y,cell)
+	print(d)
 	emit_signal("finished")
-	
+
 func get_random_tile() -> int:
 	return _rng.randi_range(0,9)
 	
 func get_random_tile_simplex(noise_value:float) -> int:
 	if(noise_value<-0.6):
-		print("sand")
+		#print("sand")
 		return _rng.randi_range(0,7)
 	elif(noise_value<-0.2):
-		print("clay")
+		#print("clay")
 		return _rng.randi_range(8,16)
 	elif(noise_value<0.2):
-		print("sand")
+		#print("sand")
 		return _rng.randi_range(0,7)
 	elif(noise_value<0.6):
-		print("grass")
+		#print("grass")
 		return _rng.randi_range(17,24)
 	else:
-		print("sand")
+		#print("sand")
 		return _rng.randi_range(0,7)
 
 func _input(event):
@@ -81,6 +92,7 @@ func _input(event):
 			var tile_pos = getSelectedHexagon(pos + camera_pos)
 			var tile_index = _tilemap.get_cell(tile_pos.x, tile_pos.y)
 			print(pos,"tile_pos",tile_pos)
+			#print("dictionary content", d, " tile_index", tile_index)
 			$CanvasLayer/TileView.popup()
 			$CanvasLayer/TileView/Content/Body/TileInfo/TileImage.texture = _tilemap.tile_set.tile_get_texture(tile_index)
 			$CanvasLayer/TileView/Content/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
@@ -121,4 +133,5 @@ func getSelectedHexagon(pos):
 			column = column + 1
 	return Vector2(column,row);
 
-
+func getDictionary():
+	return d
