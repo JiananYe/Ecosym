@@ -1,18 +1,22 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Game/tileset/terrain_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Game/GameWorld.gd" type="Script" id=2]
 [ext_resource path="res://Game/ui/TileView.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Game/ui/Settings.tscn" type="PackedScene" id=4]
+[ext_resource path="res://interface/font/monster16.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Game/CanvasLayer.gd" type="Script" id=6]
+[ext_resource path="res://Game/ui/BuildMenu.tscn" type="PackedScene" id=7]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
 var dragging = false
 
 func _ready():
-	set_process_input(true)
+	set_process_unhandled_input(true)
 
-func _input(event):
-	if not get_node(\"../CanvasLayer/TileView\").visible:
+func _unhandled_input(event):
+	if not get_node(\"../CanvasLayer/TileView\").visible and not get_node(\"../CanvasLayer/Settings\").visible:
 		if event is InputEventMouseButton and Input.is_action_pressed(\"sub_click\"):
 			if event.is_pressed():
 				dragging = true
@@ -20,7 +24,6 @@ func _input(event):
 				dragging = false
 		elif event is InputEventMouseMotion and dragging and Input.is_action_pressed(\"sub_click\"):
 			position = get_global_mouse_position() - OS.get_window_size()/2
-			print(position)
 "
 
 [sub_resource type="CircleShape2D" id=2]
@@ -49,5 +52,26 @@ current = true
 smoothing_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource( 6 )
+
+[node name="Settings" parent="CanvasLayer" instance=ExtResource( 4 )]
+visible = false
 
 [node name="TileView" parent="CanvasLayer" instance=ExtResource( 3 )]
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 12.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 5 )
+text = "SETTINGS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BuildMenu" parent="CanvasLayer" instance=ExtResource( 7 )]
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[connection signal="pressed" from="CanvasLayer/SettingsButton" to="CanvasLayer" method="_on_SettingsButton_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

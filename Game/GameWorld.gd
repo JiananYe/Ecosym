@@ -5,7 +5,9 @@ signal finished
 
 var _rng = RandomNumberGenerator.new()
 var d = {}
+var new_map := false
 
+onready var http : HTTPRequest = $HTTPRequest
 onready var _tilemap = $Navigation2D/TileMap
 onready var _tile_view = preload("res://Game/ui/TileView.tscn")
 
@@ -15,13 +17,30 @@ const CUSTOM_OFFSET_X = 0
 const CUSTOM_OFFSET_Y = 36
 
 func _ready() -> void:
-	setup()
-	return
+	Firebase.get_document("map_data/%s" % "world", http)
+
+
+func _on_HTTPRequest_request_completed(result: int, response_code: int, headers: PoolStringArray, body: PoolByteArray) -> void:
+	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
+	#print(result_body)
+	match response_code:
+		404:
+			print("404")
+			return
+		200:
+			print("Information loaded successfully")
+			self.d = result_body.fields
+			print(d)
+			load_map()
+
+func load_map():
+	for x in range(0,size_units.x):
+		for y in range(0,size_units.y):
+			_tilemap.set_cell(x,y,
+			int(d[str(x)].mapValue.fields[str(y)].mapValue.fields.tile_index.integerValue))
 
 func setup() -> void:
 	var map_size_px = (size_units+Vector2(0.5,0)) * _tilemap.cell_size
-	#get_tree().set_screen_stretch(SceneTree.STRETCH_MODE_2D,SceneTree.STRETCH_ASPECT_KEEP,map_size_px+Vector2(CUSTOM_OFFSET_X,CUSTOM_OFFSET_Y))
-	#generate()
 	generate_simplex()
 
 func generate() -> void:
@@ -52,6 +71,7 @@ func generate_simplex() -> void:
 				"y": {"integerValue": y},
 				"tile_index": {"integerValue": cell},
 				"ressource": {"integerValue": _rng.randi_range(0,9)},
+				"owner": {"stringValue": ""},
 			}
 			d[x].mapValue.fields[y] = {
 				#"mapValue": {"fields":{
@@ -61,7 +81,6 @@ func generate_simplex() -> void:
 				#}}
 			}
 			_tilemap.set_cell(x,y,cell)
-	print(d)
 	emit_signal("finished")
 
 func get_random_tile() -> int:
@@ -84,7 +103,7 @@ func get_random_tile_simplex(noise_value:float) -> int:
 		#print("sand")
 		return _rng.randi_range(0,7)
 
-func _input(event):
+func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed and not $CanvasLayer/TileView.visible and Input.is_action_pressed("main_click"):
 			var pos = event.position
