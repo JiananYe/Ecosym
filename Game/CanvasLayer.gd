@@ -4,7 +4,6 @@ func _on_SettingsButton_pressed():
 	$Settings.popup()
 
 func _input(event):
-	print("ïnput canvas", event)
 	if event.is_action_released("ui_cancel"):
 		print("true")
 		if $TileView.visible == true:

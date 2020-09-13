@@ -35,6 +35,6 @@ func _on_GenerateButton_pressed():
 
 func _on_LoadButton_pressed():
 	get_tree().get_root().get_node("World").load_map()
-	
 
-
+func _on_MainMenuButton_pressed():
+	get_tree().change_scene("res://Main.tscn")

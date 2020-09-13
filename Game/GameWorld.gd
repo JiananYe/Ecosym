@@ -6,9 +6,11 @@ signal finished
 var _rng = RandomNumberGenerator.new()
 var d = {}
 var new_map := false
+var tile_pos
 
 onready var http : HTTPRequest = $HTTPRequest
 onready var _tilemap = $Navigation2D/TileMap
+onready var _tilemap_obj = $Navigation2D/TileMapObj
 onready var _tile_view = preload("res://Game/ui/TileView.tscn")
 
 export var size_units = Vector2(32,18)
@@ -19,10 +21,24 @@ const CUSTOM_OFFSET_Y = 36
 func _ready() -> void:
 	Firebase.get_document("map_data/%s" % "world", http)
 
+func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		if event.pressed and not $CanvasLayer/TileView.visible and Input.is_action_pressed("main_click"):
+			var pos = event.position
+			var camera_pos = $KinematicBody2D.position
+			tile_pos = getSelectedHexagon(pos + camera_pos)
+			var tile_index = _tilemap.get_cell(tile_pos.x, tile_pos.y)
+			print(pos,"tile_pos",tile_pos)
+			#print("dictionary content", d, " tile_index", tile_index)
+			$CanvasLayer/TileView.popup()
+			$CanvasLayer/TileView/Content/Body/TileInfo/TileImage.texture = _tilemap.tile_set.tile_get_texture(tile_index)
+			$CanvasLayer/TileView/Content/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
+			#Debug Hex Cells
+			#$Navigation2D/TileMap.set_cell(tile_pos.x,tile_pos.y,tile_index+1)
 
 func _on_HTTPRequest_request_completed(result: int, response_code: int, headers: PoolStringArray, body: PoolByteArray) -> void:
 	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
-	#print(result_body)
+	print(result_body)
 	match response_code:
 		404:
 			print("404")
@@ -38,6 +54,8 @@ func load_map():
 		for y in range(0,size_units.y):
 			_tilemap.set_cell(x,y,
 			int(d[str(x)].mapValue.fields[str(y)].mapValue.fields.tile_index.integerValue))
+			_tilemap_obj.set_cell(x,y,
+			int(d[str(x)].mapValue.fields[str(y)].mapValue.fields.building.integerValue))
 
 func setup() -> void:
 	var map_size_px = (size_units+Vector2(0.5,0)) * _tilemap.cell_size
@@ -72,16 +90,17 @@ func generate_simplex() -> void:
 				"tile_index": {"integerValue": cell},
 				"ressource": {"integerValue": _rng.randi_range(0,9)},
 				"owner": {"stringValue": ""},
+				"building": {"integerValue": -1},
 			}
 			d[x].mapValue.fields[y] = {
-				#"mapValue": {"fields":{
-					#y: {
-						"mapValue": {"fields": value}
-					#}
-				#}}
+				"mapValue": {"fields": value}
 			}
 			_tilemap.set_cell(x,y,cell)
+	_tilemap_obj.clear()
 	emit_signal("finished")
+
+func set_tile_owner():
+	Firebase.update_document("map_data/world/%s/mapValue/fields/%s/mapValue/fields/owner" % [tile_pos.x, tile_pos.y], {"stringValue": Firebase.user_info.id}, http)
 
 func get_random_tile() -> int:
 	return _rng.randi_range(0,9)
@@ -103,20 +122,8 @@ func get_random_tile_simplex(noise_value:float) -> int:
 		#print("sand")
 		return _rng.randi_range(0,7)
 
-func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		if event.pressed and not $CanvasLayer/TileView.visible and Input.is_action_pressed("main_click"):
-			var pos = event.position
-			var camera_pos = $KinematicBody2D.position
-			var tile_pos = getSelectedHexagon(pos + camera_pos)
-			var tile_index = _tilemap.get_cell(tile_pos.x, tile_pos.y)
-			print(pos,"tile_pos",tile_pos)
-			#print("dictionary content", d, " tile_index", tile_index)
-			$CanvasLayer/TileView.popup()
-			$CanvasLayer/TileView/Content/Body/TileInfo/TileImage.texture = _tilemap.tile_set.tile_get_texture(tile_index)
-			$CanvasLayer/TileView/Content/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
-			#Debug Hex Cells
-			#$Navigation2D/TileMap.set_cell(tile_pos.x,tile_pos.y,tile_index+1)
+func set_map_obj(cell):
+	_tilemap_obj.set_cell(tile_pos.x,tile_pos.y,cell)
 
 func getSelectedHexagon(pos):
 	var gridHeight = $Navigation2D/TileMap.cell_size.y
@@ -154,3 +161,4 @@ func getSelectedHexagon(pos):
 
 func getDictionary():
 	return d
+
