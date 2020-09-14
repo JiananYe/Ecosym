@@ -4,7 +4,6 @@
 [ext_resource path="res://Game/ui/Settings.gd" type="Script" id=2]
 
 [node name="Settings" type="Popup"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 0
@@ -68,10 +67,7 @@ margin_right = 115.0
 margin_bottom = 138.0
 custom_fonts/font = ExtResource( 1 )
 text = "MAIN MENU"
-
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
 [connection signal="pressed" from="Panel/VBoxContainer/GenerateButton" to="." method="_on_GenerateButton_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/UploadButton" to="." method="_on_UploadButton_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/MainMenuButton" to="." method="_on_MainMenuButton_pressed"]
-[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

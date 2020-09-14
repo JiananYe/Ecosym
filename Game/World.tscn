@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Game/tileset/terrain_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Game/GameWorld.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Game/ui/BuildMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Game/tileset/medival_buildings.tres" type="TileSet" id=8]
 [ext_resource path="res://Game/ui/Profile.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Game/tileset/objects.tres" type="TileSet" id=10]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -49,6 +50,10 @@ cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 cell_half_offset = 0
 format = 1
 
+[node name="TileMapImg" type="TileMap" parent="Navigation2D"]
+tile_set = ExtResource( 10 )
+format = 1
+
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 script = SubResource( 1 )
 
@@ -64,9 +69,9 @@ smoothing_enabled = true
 script = ExtResource( 6 )
 
 [node name="Settings" parent="CanvasLayer" instance=ExtResource( 4 )]
-visible = false
 
 [node name="TileView" parent="CanvasLayer" instance=ExtResource( 3 )]
+visible = false
 
 [node name="SettingsButton" type="Button" parent="CanvasLayer"]
 margin_left = 10.0

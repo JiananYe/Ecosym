@@ -7,10 +7,24 @@ var _rng = RandomNumberGenerator.new()
 var d = {}
 var new_map := false
 var tile_pos
+const ressource = {
+	0: "can",
+	1: "cargo",
+	2: "crystal",
+	3: "wheat",
+	4: "wood",
+	5: "oil",
+	6: "coal",
+	7: "stone",
+	8: "",
+	9: "",
+}
+
 
 onready var http : HTTPRequest = $HTTPRequest
 onready var _tilemap = $Navigation2D/TileMap
 onready var _tilemap_obj = $Navigation2D/TileMapObj
+onready var _tilemap_img = $Navigation2D/TileMapImg
 onready var _tile_view = preload("res://Game/ui/TileView.tscn")
 
 export var size_units = Vector2(32,18)
@@ -28,11 +42,14 @@ func _unhandled_input(event):
 			var camera_pos = $KinematicBody2D.position
 			tile_pos = getSelectedHexagon(pos + camera_pos)
 			var tile_index = _tilemap.get_cell(tile_pos.x, tile_pos.y)
+			var resource_index = d[str(tile_pos.x)].mapValue.fields[str(tile_pos.y)].mapValue.fields.ressource.integerValue
 			print(pos,"tile_pos",tile_pos)
 			#print("dictionary content", d, " tile_index", tile_index)
 			$CanvasLayer/TileView.popup()
 			$CanvasLayer/TileView/Content/Body/TileInfo/TileImage.texture = _tilemap.tile_set.tile_get_texture(tile_index)
 			$CanvasLayer/TileView/Content/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
+			$CanvasLayer/TileView/Content/Body/Ressources/HBoxContainer/TextureRect.texture = _tilemap_img.tile_set.tile_get_texture(int(resource_index))
+			$CanvasLayer/TileView/Content/Body/Ressources/HBoxContainer/Label.text = ressource[int(resource_index)]
 			#Debug Hex Cells
 			#$Navigation2D/TileMap.set_cell(tile_pos.x,tile_pos.y,tile_index+1)
 
@@ -86,7 +103,7 @@ func generate_simplex() -> void:
 			var cell = get_random_tile_simplex(simplexNoise.get_noise_2d(x,y))
 			var value = {
 				"tile_index": {"integerValue": cell},
-				"ressource": {"integerValue": _rng.randi_range(0,9)},
+				"ressource": {"integerValue": _rng.randi_range(0,7)},
 				"owner": {"stringValue": ""},
 				"building": {"integerValue": -1},
 			}
@@ -99,6 +116,7 @@ func generate_simplex() -> void:
 
 func set_tile_owner():
 	#davor noch updaten sonst race condition bzw. in eigenes document packen
+	print(d[str(tile_pos.x)].mapValue.fields[str(tile_pos.y)].mapValue.fields.owner.stringValue)
 	d[str(tile_pos.x)].mapValue.fields[str(tile_pos.y)].mapValue.fields.owner.stringValue = Firebase.user_info.id
 	Firebase.update_document("map_data/%s" % "world", d, http)
 	#weiterer http node wird benötigt. sonst wird nur der erste request abgeschickt
@@ -107,13 +125,16 @@ func set_tile_owner():
 	#Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
 
 func set_map_obj(cell):
-	_tilemap_obj.set_cell(tile_pos.x,tile_pos.y,cell)
-	d[str(tile_pos.x)].mapValue.fields[str(tile_pos.y)].mapValue.fields.building.integerValue = cell
-	Firebase.update_document("map_data/%s" % "world", d, http)
-	#weiterer http node wird benötigt. sonst wird nur der erste request abgeschickt
-	Local.set_credit(-100)
-	#var profile = Local.profile
-	#Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
+	if d[str(tile_pos.x)].mapValue.fields[str(tile_pos.y)].mapValue.fields.owner.stringValue == Firebase.user_info.id:
+		_tilemap_obj.set_cell(tile_pos.x,tile_pos.y,cell)
+		d[str(tile_pos.x)].mapValue.fields[str(tile_pos.y)].mapValue.fields.building.integerValue = cell
+		Firebase.update_document("map_data/%s" % "world", d, http)
+		#weiterer http node wird benötigt. sonst wird nur der erste request abgeschickt
+		Local.set_credit(-100)
+		#var profile = Local.profile
+		#Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
+	else:
+		print("You have to own the tile first")
 
 func set_map():
 	match new_map:
