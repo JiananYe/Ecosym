@@ -46,7 +46,6 @@ func _on_HTTPRequest_request_completed(result: int, response_code: int, headers:
 		200:
 			print("Information loaded successfully")
 			self.d = result_body.fields
-			print(d)
 			load_map()
 
 func load_map():
@@ -71,6 +70,7 @@ func generate() -> void:
 	emit_signal("finished")
 	
 func generate_simplex() -> void:
+	d = {}
 	emit_signal("started")
 	_rng.randomize()
 	var simplexNoise = OpenSimplexNoise.new()
@@ -85,8 +85,6 @@ func generate_simplex() -> void:
 		for y in range(0,size_units.y):
 			var cell = get_random_tile_simplex(simplexNoise.get_noise_2d(x,y))
 			var value = {
-				"x": {"integerValue": x},
-				"y": {"integerValue": y},
 				"tile_index": {"integerValue": cell},
 				"ressource": {"integerValue": _rng.randi_range(0,9)},
 				"owner": {"stringValue": ""},
@@ -100,7 +98,29 @@ func generate_simplex() -> void:
 	emit_signal("finished")
 
 func set_tile_owner():
-	Firebase.update_document("map_data/world/%s/mapValue/fields/%s/mapValue/fields/owner" % [tile_pos.x, tile_pos.y], {"stringValue": Firebase.user_info.id}, http)
+	#davor noch updaten sonst race condition bzw. in eigenes document packen
+	d[str(tile_pos.x)].mapValue.fields[str(tile_pos.y)].mapValue.fields.owner.stringValue = Firebase.user_info.id
+	Firebase.update_document("map_data/%s" % "world", d, http)
+	#weiterer http node wird benötigt. sonst wird nur der erste request abgeschickt
+	Local.set_credit(-150)
+	#var profile = Local.profile
+	#Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
+
+func set_map_obj(cell):
+	_tilemap_obj.set_cell(tile_pos.x,tile_pos.y,cell)
+	d[str(tile_pos.x)].mapValue.fields[str(tile_pos.y)].mapValue.fields.building.integerValue = cell
+	Firebase.update_document("map_data/%s" % "world", d, http)
+	#weiterer http node wird benötigt. sonst wird nur der erste request abgeschickt
+	Local.set_credit(-100)
+	#var profile = Local.profile
+	#Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
+
+func set_map():
+	match new_map:
+		true:
+			Firebase.save_document("map_data?documentId=%s" % "world", d, http)
+		false:
+			Firebase.update_document("map_data/%s" % "world", d, http)
 
 func get_random_tile() -> int:
 	return _rng.randi_range(0,9)
@@ -121,9 +141,6 @@ func get_random_tile_simplex(noise_value:float) -> int:
 	else:
 		#print("sand")
 		return _rng.randi_range(0,7)
-
-func set_map_obj(cell):
-	_tilemap_obj.set_cell(tile_pos.x,tile_pos.y,cell)
 
 func getSelectedHexagon(pos):
 	var gridHeight = $Navigation2D/TileMap.cell_size.y
@@ -161,4 +178,3 @@ func getSelectedHexagon(pos):
 
 func getDictionary():
 	return d
-

@@ -67,7 +67,6 @@ script = ExtResource( 6 )
 visible = false
 
 [node name="TileView" parent="CanvasLayer" instance=ExtResource( 3 )]
-visible = false
 
 [node name="SettingsButton" type="Button" parent="CanvasLayer"]
 margin_left = 10.0

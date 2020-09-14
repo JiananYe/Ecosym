@@ -9,7 +9,7 @@ var new_profile := false
 var information_sent := false
 var profile := {
 	"nickname": {},
-	"credits": { "integerValue": 1000 }
+	"credits": {}
 } setget set_profile, get_profile
 
 
@@ -36,11 +36,13 @@ func _on_ConfirmButton_pressed() -> void:
 		notification.text = "Please, enter your nickname"
 		return
 	profile.nickname = { "stringValue": nickname.text }
-	profile.credits = { "integerValue": 1000 }
 	match new_profile:
 		true:
 			print("new profile")
+			profile.credits = { "integerValue": 1000 }
 			Firebase.save_document("users?documentId=%s" % Firebase.user_info.id, profile, http)
+			Local.profile = self.profile
+			get_tree().change_scene("res://Game/World.tscn")
 		false:
 			print("old profile")
 			Firebase.update_document("users/%s" % Firebase.user_info.id, profile, http)
