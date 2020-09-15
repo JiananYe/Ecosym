@@ -84,6 +84,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Research" type="Button" parent="CanvasLayer"]
+margin_left = 10.0
+margin_top = 50.0
+custom_fonts/font = ExtResource( 5 )
+text = "RESEARCH"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="BuildMenu" parent="CanvasLayer" instance=ExtResource( 7 )]
 
 [node name="PlayerUI" parent="CanvasLayer" instance=ExtResource( 9 )]
