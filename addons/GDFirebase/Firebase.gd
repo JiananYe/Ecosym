@@ -23,6 +23,7 @@ func load_config():
 	if ProjectSettings.has_setting(ENVIRONMENT_VARIABLES+"apiKey"):
 		for key in config.keys():
 			config[key] = ProjectSettings.get_setting(ENVIRONMENT_VARIABLES+key)
+		print(config)
 	else:
 		printerr("No configuration settings found, add them in override.cfg file.")
 

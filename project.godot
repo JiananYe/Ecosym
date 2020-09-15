@@ -50,8 +50,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Firebase="*res://addons/GDFirebase/Firebase.gd"
 Local="*res://static/Local.gd"
+Firebase="*res://addons/GDFirebase/Firebase.gd"
+FirebaseFirestoreCollection="*res://addons/GDFirebase/FirebaseFirestoreCollection.gd"
 
 [display]
 

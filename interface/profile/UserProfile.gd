@@ -1,5 +1,29 @@
 extends Control
 
+var firestore
+
+func _ready() -> void:
+	firestore = Firebase.Firestore.collection("users")
+	Firebase.Auth.connect("userdata_received", self, "_on_userdata_received")
+	firestore.connect("get_document", self, "_on_get_doc_received")
+
+func _on_ConfirmButton_pressed():
+	if Firebase.Auth.auth:
+		#firestore = Firebase.Firestore.collection("new1")
+		#firestore.add("new2", {"fields": {"new3": {"stringValue": "new4"}}})
+		print(Local.profile)
+
+func _on_userdata_received(userdata):
+	print("userdata received")
+	firestore.get(userdata.local_id)
+
+func _on_get_doc_received(doc):
+	print("doc received")
+	Local.profile = doc
+	print(Local.profile)
+
+"""
+
 onready var http : HTTPRequest = $HTTPRequest
 onready var nickname : LineEdit = $Container/VBoxContainer/Name/LineEdit
 onready var notification : Label = $Container/Notification
@@ -12,9 +36,8 @@ var profile := {
 	"credits": {}
 } setget set_profile, get_profile
 
-
 func _ready() -> void:
-	Firebase.get_document("users/%s" % Firebase.user_info.id, http)
+	FirestoreDocument.get("users/%s" % Firebase.user_info.id)
 
 func _on_HTTPRequest_request_completed(result: int, response_code: int, headers: PoolStringArray, body: PoolByteArray) -> void:
 	var result_body := JSON.parse(body.get_string_from_ascii()).result as Dictionary
@@ -58,3 +81,5 @@ func set_profile(value: Dictionary) -> void:
 
 func get_profile():
 	return profile
+
+"""

@@ -1,23 +1,20 @@
 extends Control
 
-onready var http: HTTPRequest = $HTTPRequest
-onready var username: LineEdit = $Container/VBoxContainer/Username/LineEdit
-onready var password: LineEdit = $Container/VBoxContainer/Password/LineEdit
 onready var notification: Label = $Container/Notification
 
-func _on_HTTPRequest_request_completed(result: int, response_code: int, headers: PoolStringArray, body: PoolByteArray) -> void:
-	var response_body := JSON.parse(body.get_string_from_ascii())
-	if response_code != 200:
-		notification.text = response_body.result.error.message.capitalize()
-		print(notification.text)
-	else:
-		notification.text = "Sign in sucessful!"
-	yield(get_tree().create_timer(2.0), "timeout")
-	get_tree().change_scene("res://interface/profile/UserProfile.tscn")
-
+func _ready():
+	Firebase.Auth.connect("login_succeeded", self, "_on_FirebaseAuth_login_succeeded")
+	Firebase.Auth.connect("login_failed", self, "on_login_failed")
+	pass
 
 func _on_LoginButton_pressed() -> void:
-	if username.text.empty() or password.text.empty():
-		notification.text = "Please, enter your username and password"
-		return
-	Firebase.login(username.text, password.text, http)
+	var email = $Container/VBoxContainer/Username/LineEdit.text
+	var password = $Container/VBoxContainer/Password/LineEdit.text
+	Firebase.Auth.login_with_email_and_password(email, password)
+	
+func on_login_failed(error_code, message):
+	print("error code: " + str(error_code))
+	print("message: " + str(message))
+	
+func _on_FirebaseAuth_login_succeeded(auth):
+	get_tree().change_scene("res://interface/profile/UserProfile.tscn")
