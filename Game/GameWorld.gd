@@ -66,11 +66,13 @@ func on_received_new_map(data):
 	if data.data:            
 		d.map_data = data.data
 		print("keyyyy ", data.key, " data", data.data[0][0], data.data)
+		load_map()
 		
 func on_received_updated_map(data):
 	if data.data:
 		d.map_data = data.data
 		print("keyyyy ", data.key, " data", data.data[0][0], data.data)
+		load_map()
 
 func _on_get_doc_received(doc):
 	print(doc.doc_fields)
@@ -124,7 +126,7 @@ func generate_simplex():
 			})
 			_tilemap.set_cell(x,y,cell)
 	_tilemap_obj.clear()
-	d = matrix
+	d.map_data = matrix
 	print("test matrix", d.map_data)
 	emit_signal("finished")
 
