@@ -58,6 +58,7 @@ func on_new_sse_event(headers, event, data):
 	if data:
 		var command = event        
 		if command and command != "keep-alive":
+			#print("command", command, data)
 			_route_data(command, data.path, data.data)
 			if command == put_tag:
 				if data.path == separator and data.data and data.data.keys().size() > 0:
@@ -86,6 +87,13 @@ func push(data):
 	var to_push = JSON.print(data)
 	if pusher.get_http_client_status() == HTTPClient.STATUS_DISCONNECTED:
 		pusher.request(_get_list_url() + db_path + _get_remaining_path(), PoolStringArray(), true, HTTPClient.METHOD_POST, to_push)
+	else:
+		push_queue.append(data)
+		
+func put(data):
+	var to_push = JSON.print(data)
+	if pusher.get_http_client_status() == HTTPClient.STATUS_DISCONNECTED:
+		pusher.request(_get_list_url() + db_path + _get_remaining_path(), PoolStringArray(), true, HTTPClient.METHOD_PUT, to_push)
 	else:
 		push_queue.append(data)
 
