@@ -1,6 +1,7 @@
 extends Node
 
 var profile
+var userdata
 
 func set_credit(value):
 	profile.credits.integerValue = value + int(profile.credits.integerValue)

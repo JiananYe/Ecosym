@@ -1,33 +1,45 @@
 extends Control
 
-var firestore
+var firestore_users
+var new_profile
+
+onready var nickname : LineEdit = $Container/VBoxContainer/Name/LineEdit
+onready var credits : Label = $Container/VBoxContainer/Credits/Credits
+onready var notification : Label = $Container/Notification
 
 func _ready() -> void:
-	firestore = Firebase.Firestore.collection("users")
-	Firebase.Auth.connect("userdata_received", self, "_on_userdata_received")
-	firestore.connect("get_document", self, "_on_get_doc_received")
+	firestore_users = Firebase.Firestore.collection("users")
+	firestore_users.connect("get_document", self, "_on_get_doc_received")
+	firestore_users.connect("error", self, "on_error_received")
 
 func _on_ConfirmButton_pressed():
 	if Firebase.Auth.auth:
-		#firestore = Firebase.Firestore.collection("new1")
-		#firestore.add("new2", {"fields": {"new3": {"stringValue": "new4"}}})
-		print(Local.profile)
+		if nickname.text.empty():
+			notification.text = "Please, enter your nickname"
+			return
+		else:
+			if new_profile:
+				var profile := {
+					"nickname": {"stringValue": nickname.text},
+					"credits": {"integerValue": 1000}
+				}
+				firestore_users.add(Local.userdata.local_id, {"fields": profile})
+			get_tree().change_scene("res://Game/World.tscn")
+			
 
-func _on_userdata_received(userdata):
-	print("userdata received")
-	firestore.get(userdata.local_id)
+func _on_error_received(code,status,message):
+	new_profile = true
 
 func _on_get_doc_received(doc):
-	print("doc received")
-	Local.profile = doc
-	print(Local.profile)
+	print("doc received", doc.doc_fields)
+	Local.profile = doc.doc_fields
+	print(Local.profile.nickname.stringValue, nickname)
+	nickname.text = Local.profile.nickname.stringValue
+	credits.text = Local.profile.credits.integerValue
 
 """
 
 onready var http : HTTPRequest = $HTTPRequest
-onready var nickname : LineEdit = $Container/VBoxContainer/Name/LineEdit
-onready var notification : Label = $Container/Notification
-onready var credits : Label = $Container/VBoxContainer/Credits/Credits
 
 var new_profile := false
 var information_sent := false

@@ -154,8 +154,5 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 3 )
 text = "BUILD"
-
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
 [connection signal="pressed" from="Content/Body/Actions/BuyButton" to="." method="_on_BuyButton_pressed"]
 [connection signal="pressed" from="Content/Body/Actions/BuildButton" to="." method="_on_BuildButton_pressed"]
-[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

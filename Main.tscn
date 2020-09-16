@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://interface/font/monster48.tres" type="DynamicFont" id=2]
+[ext_resource path="res://interface/profile/UserProfile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://interface/register/Register.tscn" type="PackedScene" id=4]
+[ext_resource path="res://interface/login/Login.tscn" type="PackedScene" id=5]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -11,7 +14,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Title" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 100.0
@@ -23,7 +26,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="Title"]
 margin_left = 334.0
 margin_right = 690.0
 margin_bottom = 60.0
@@ -31,7 +34,7 @@ size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 2 )
 text = "TITLE SCREEN"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Title"]
 margin_left = 196.0
 margin_top = 160.0
 margin_right = 827.0
@@ -43,7 +46,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LoginButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="LoginButton" type="Button" parent="Title/HBoxContainer"]
 margin_right = 174.0
 margin_bottom = 66.0
 size_flags_horizontal = 0
@@ -51,7 +54,7 @@ size_flags_vertical = 4
 custom_fonts/font = ExtResource( 2 )
 text = "LOGIN"
 
-[node name="RegisterButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="RegisterButton" type="Button" parent="Title/HBoxContainer"]
 margin_left = 204.0
 margin_right = 466.0
 margin_bottom = 66.0
@@ -60,12 +63,21 @@ size_flags_vertical = 4
 custom_fonts/font = ExtResource( 2 )
 text = "REGISTER"
 
-[node name="TestButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="TestButton" type="Button" parent="Title/HBoxContainer"]
 margin_left = 496.0
 margin_right = 631.0
 margin_bottom = 66.0
 custom_fonts/font = ExtResource( 2 )
 text = "TEST"
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/LoginButton" to="." method="_on_LoginButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/RegisterButton" to="." method="_on_RegisterButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/TestButton" to="." method="_on_TestButton_pressed"]
+
+[node name="Register" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[node name="Login" parent="." instance=ExtResource( 5 )]
+visible = false
+
+[node name="UserProfile" parent="." instance=ExtResource( 3 )]
+visible = false
+[connection signal="pressed" from="Title/HBoxContainer/LoginButton" to="." method="_on_LoginButton_pressed"]
+[connection signal="pressed" from="Title/HBoxContainer/RegisterButton" to="." method="_on_RegisterButton_pressed"]
+[connection signal="pressed" from="Title/HBoxContainer/TestButton" to="." method="_on_TestButton_pressed"]

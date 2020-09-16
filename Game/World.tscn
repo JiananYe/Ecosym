@@ -95,7 +95,4 @@ __meta__ = {
 [node name="BuildMenu" parent="CanvasLayer" instance=ExtResource( 7 )]
 
 [node name="PlayerUI" parent="CanvasLayer" instance=ExtResource( 9 )]
-
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
 [connection signal="pressed" from="CanvasLayer/SettingsButton" to="CanvasLayer" method="_on_SettingsButton_pressed"]
-[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
