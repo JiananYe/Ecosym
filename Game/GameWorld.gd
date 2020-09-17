@@ -7,9 +7,8 @@ var _rng = RandomNumberGenerator.new()
 var d = {"map_data": {}}
 var new_map := false
 var tile_pos
-var firebase_db_map_data
 var listener_map_data
-var firestore_map_data
+var listener_community_data
 var firestore_users
 
 onready var _tilemap = $Navigation2D/TileMap
@@ -36,9 +35,12 @@ const ressource = {
 
 func _ready() -> void:
 	#firebase_db_map_data = Firebase.Database.get_database_reference("game/map_data", {})
-	listener_map_data = Firebase.Database.get_database_reference("game", { })
+	listener_map_data = Firebase.Database.get_database_reference("game/world", { })
 	listener_map_data.connect("patch_data_update", self, "on_received_updated_map")
 	listener_map_data.connect("new_data_update", self, "on_received_new_map")
+	#listener_community_data = Firebase.Database.get_database_reference("game/community", { })
+	#listener_community_data.connect("patch_data_update", self, "on_received_updated_community")
+	#listener_community_data.connect("new_data_update", self, "on_received_new_community")
 	#firestore_map_data = Firebase.Firestore.collection("map_data")
 	firestore_users = Firebase.Firestore.collection("users")
 	#firestore_map_data.connect("get_document", self, "_on_get_doc_received")
@@ -73,11 +75,6 @@ func on_received_updated_map(data):
 		d.map_data = data.data
 		print("keyyyy ", data.key, " data", data.data[0][0], data.data)
 		load_map()
-
-func _on_get_doc_received(doc):
-	print(doc.doc_fields)
-	self.d = doc.doc_fields
-	load_map()
 
 func on_error_received(code,status,message):
 	new_map = true
@@ -137,7 +134,7 @@ func set_tile_owner():
 	#firestore_map_data.update("world", {"fields": d})
 	Local.set_credit(-150)
 	#cloud function für credits setzen/ builden
-	firestore_users.update(Local.userdata.local_id, Local.profile)
+	firestore_users.update(Local.userdata.local_id, {"fields": Local.profile})
 
 func set_map_obj(cell):
 	if d.map_data[tile_pos.x][tile_pos.y].owner == Local.userdata.local_id:
@@ -148,19 +145,9 @@ func set_map_obj(cell):
 		#weiterer http node wird benötigt. sonst wird nur der erste request abgeschickt
 		Local.set_credit(-100)
 		#cloud function für credits setzen/ builden
-		firestore_users.update(Local.userdata.local_id, Local.profile)
+		firestore_users.update(Local.userdata.local_id, {"fields": Local.profile})
 	else:
 		print("You have to own the tile first")
-
-func set_map():
-	pass
-	#match new_map:
-		#true:
-			#firebase_db_map_data.push(d)
-			#firestore_map_data.add("world", {"fields": d})
-		#false:
-			#firebase_db_map_data.push(d)
-			#firestore_map_data.update("world", {"fields": d})
 
 func get_random_tile() -> int:
 	return _rng.randi_range(0,9)

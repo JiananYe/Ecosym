@@ -11,3 +11,6 @@ func _on_LoadButton_pressed():
 
 func _on_MainMenuButton_pressed():
 	get_tree().change_scene("res://Main.tscn")
+
+func _on_BackButton_pressed():
+	hide()

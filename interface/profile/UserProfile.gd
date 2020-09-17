@@ -14,21 +14,23 @@ func _ready() -> void:
 
 func _on_ConfirmButton_pressed():
 	if Firebase.Auth.auth:
+		print("new profile", new_profile)
 		if nickname.text.empty():
 			notification.text = "Please, enter your nickname"
 			return
-		else:
-			if new_profile:
-				var profile := {
-					"nickname": {"stringValue": nickname.text},
-					"credits": {"integerValue": 1000}
-				}
-				firestore_users.add(Local.userdata.local_id, {"fields": profile})
-			get_tree().change_scene("res://Game/World.tscn")
+		if new_profile:
+			var profile := {
+				"nickname": {"stringValue": nickname.text},
+				"credits": {"integerValue": 1000}
+			}
+			print("herreeeeeeeeeeee")
+			firestore_users.add(Local.userdata.local_id, {"fields": profile})
+		get_tree().change_scene("res://Game/World.tscn")
 			
 
-func _on_error_received(code,status,message):
+func on_error_received(code,status,message):
 	new_profile = true
+	print('error received', new_profile)
 
 func _on_get_doc_received(doc):
 	print("doc received", doc.doc_fields)

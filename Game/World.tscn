@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Game/tileset/terrain_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Game/GameWorld.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Game/tileset/medival_buildings.tres" type="TileSet" id=8]
 [ext_resource path="res://Game/ui/Profile.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Game/tileset/objects.tres" type="TileSet" id=10]
+[ext_resource path="res://Game/tileset/community.tres" type="TileSet" id=11]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -50,6 +51,14 @@ cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 cell_half_offset = 0
 format = 1
 
+[node name="TileMapCommunity" type="TileMap" parent="Navigation2D"]
+tile_set = ExtResource( 11 )
+cell_size = Vector2( 120, 104 )
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 0
+format = 1
+tile_data = PoolIntArray( 196616, 3, 0, 196617, 3, 0, 196618, 0, 0, 196619, 6, 0, 262152, 0, 0, 262153, 0, 0, 262154, 0, 0, 262155, 0, 0, 262156, 7, 0, 327687, 0, 0, 327688, 4, 0, 327689, 3, 0, 327690, 3, 0, 327691, 0, 0, 327692, 8, 0, 393223, 0, 0, 393224, 7, 0, 393225, 3, 0, 393226, 0, 0, 393227, 0, 0, 393228, 0, 0, 393229, 1, 0, 458759, 1, 0, 458760, 2, 0, 458761, 0, 0, 458762, 5, 0, 458763, 4, 0, 458764, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 3, 0, 524299, 7, 0, 524300, 2, 0, 589832, 0, 0, 589833, 0, 0, 589834, 1, 0, 589835, 0, 0 )
+
 [node name="TileMapImg" type="TileMap" parent="Navigation2D"]
 tile_set = ExtResource( 10 )
 format = 1
@@ -69,6 +78,7 @@ smoothing_enabled = true
 script = ExtResource( 6 )
 
 [node name="Settings" parent="CanvasLayer" instance=ExtResource( 4 )]
+visible = false
 
 [node name="TileView" parent="CanvasLayer" instance=ExtResource( 3 )]
 

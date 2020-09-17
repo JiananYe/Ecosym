@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Game/assets/world/Tiles/Modern/modern_largeBuilding.png" type="Texture" id=1]
+[ext_resource path="res://Game/assets/world/Tiles/Modern/modern_petrol.png" type="Texture" id=2]
+[ext_resource path="res://Game/assets/world/Tiles/Modern/modern_shop.png" type="Texture" id=3]
+[ext_resource path="res://Game/assets/world/Tiles/Modern/modern_skyscraper.png" type="Texture" id=4]
+[ext_resource path="res://Game/assets/world/Tiles/Modern/modern_cornerShop.png" type="Texture" id=5]
+[ext_resource path="res://Game/assets/world/Tiles/Terrain/Stone/stone_07.png" type="Texture" id=6]
+[ext_resource path="res://Game/assets/world/Tiles/Terrain/Stone/stone_19.png" type="Texture" id=7]
+[ext_resource path="res://Game/assets/world/Tiles/Modern/modern_skyscraperGlass.png" type="Texture" id=8]
+[ext_resource path="res://Game/assets/world/Tiles/Terrain/Stone/stone_15.png" type="Texture" id=9]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="stone_07" type="Sprite" parent="."]
+position = Vector2( 75.2866, 79.5402 )
+texture = ExtResource( 6 )
+
+[node name="stone_19" type="Sprite" parent="."]
+position = Vector2( 204.91, 83.1078 )
+texture = ExtResource( 7 )
+
+[node name="stone_15" type="Sprite" parent="."]
+position = Vector2( 347.615, 89.0539 )
+texture = ExtResource( 9 )
+
+[node name="modern_largeBuilding" type="Sprite" parent="."]
+position = Vector2( 80.0434, 243.651 )
+texture = ExtResource( 1 )
+
+[node name="modern_skyscraper" type="Sprite" parent="."]
+position = Vector2( 209.667, 246.029 )
+texture = ExtResource( 4 )
+
+[node name="modern_skyscraperGlass" type="Sprite" parent="."]
+position = Vector2( 351.183, 244.84 )
+texture = ExtResource( 8 )
+
+[node name="modern_cornerShop" type="Sprite" parent="."]
+position = Vector2( 484.374, 244.84 )
+texture = ExtResource( 5 )
+
+[node name="modern_shop" type="Sprite" parent="."]
+position = Vector2( 618.755, 247.219 )
+texture = ExtResource( 3 )
+
+[node name="modern_petrol" type="Sprite" parent="."]
+position = Vector2( 751.946, 247.218 )
+texture = ExtResource( 2 )
