@@ -14,3 +14,8 @@ export const getCredits = functions.https.onRequest((request, response) => {
     response.status(500).send(error)
   })
 });
+
+export const addAccount = functions.firestore.document("/users/{userid}").onCreate((snap, context) => {
+  const credits = snap.data().credits + 1000
+  return snap.ref.update({credits: credits})
+});
