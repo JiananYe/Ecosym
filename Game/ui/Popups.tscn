@@ -1,0 +1,370 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://interface/font/monster48.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Game/assets/world/Tiles/Terrain/Grass/grass_05.png" type="Texture" id=2]
+[ext_resource path="res://interface/font/monster16.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Game/assets/world/Tiles/Modern/modern_skyscraper.png" type="Texture" id=4]
+[ext_resource path="res://Game/ui/Popups.gd" type="Script" id=5]
+
+[sub_resource type="AtlasTexture" id=1]
+region = Rect2( 816, 0, 48, 56 )
+
+[sub_resource type="AtlasTexture" id=2]
+region = Rect2( 816, 0, 48, 56 )
+
+[node name="Popup" type="WindowDialog"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -362.0
+margin_top = -150.0
+margin_right = 362.0
+margin_bottom = 150.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+popup_exclusive = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TileView" type="VBoxContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="HBoxContainer" parent="TileView"]
+margin_right = 409.0
+margin_bottom = 60.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 0
+
+[node name="Title" type="Label" parent="TileView/Header"]
+margin_right = 409.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "TILE OVERVIEW"
+
+[node name="Body" type="HBoxContainer" parent="TileView"]
+margin_top = 80.0
+margin_right = 704.0
+margin_bottom = 245.0
+
+[node name="TileInfo" type="VBoxContainer" parent="TileView/Body"]
+margin_right = 120.0
+margin_bottom = 165.0
+size_flags_horizontal = 2
+size_flags_vertical = 3
+
+[node name="TileImage" type="TextureRect" parent="TileView/Body/TileInfo"]
+margin_right = 120.0
+margin_bottom = 140.0
+texture = ExtResource( 2 )
+
+[node name="TilePosition" type="Label" parent="TileView/Body/TileInfo"]
+margin_top = 144.0
+margin_right = 120.0
+margin_bottom = 165.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+
+[node name="Ressources" type="VBoxContainer" parent="TileView/Body"]
+margin_left = 236.0
+margin_right = 341.0
+margin_bottom = 165.0
+size_flags_horizontal = 2
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="TileView/Body/Ressources"]
+margin_right = 105.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 3 )
+text = "RESOURCES"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TileView/Body/Ressources"]
+margin_top = 31.0
+margin_right = 105.0
+margin_bottom = 87.0
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="TileView/Body/Ressources/HBoxContainer"]
+margin_right = 48.0
+margin_bottom = 56.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource( 1 )
+
+[node name="Label" type="Label" parent="TileView/Body/Ressources/HBoxContainer"]
+margin_left = 52.0
+margin_top = 17.0
+margin_right = 52.0
+margin_bottom = 38.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+valign = 1
+
+[node name="Actions" type="VBoxContainer" parent="TileView/Body"]
+margin_left = 472.0
+margin_right = 566.0
+margin_bottom = 138.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 10
+
+[node name="BuyButton" type="Button" parent="TileView/Body/Actions"]
+margin_right = 48.0
+margin_bottom = 27.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "BUY"
+
+[node name="RentButton" type="Button" parent="TileView/Body/Actions"]
+margin_top = 37.0
+margin_right = 58.0
+margin_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "RENT"
+
+[node name="ExploreButton" type="Button" parent="TileView/Body/Actions"]
+margin_top = 74.0
+margin_right = 94.0
+margin_bottom = 101.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "EXPLORE"
+
+[node name="BuildButton" type="Button" parent="TileView/Body/Actions"]
+margin_top = 111.0
+margin_right = 65.0
+margin_bottom = 138.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "BUILD"
+
+[node name="CityView" type="VBoxContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="HBoxContainer" parent="CityView"]
+margin_right = 114.0
+margin_bottom = 60.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 0
+
+[node name="Title" type="Label" parent="CityView/Header"]
+margin_right = 114.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "CITY"
+
+[node name="Body" type="HBoxContainer" parent="CityView"]
+margin_top = 80.0
+margin_right = 704.0
+margin_bottom = 245.0
+
+[node name="TileInfo" type="VBoxContainer" parent="CityView/Body"]
+margin_right = 120.0
+margin_bottom = 165.0
+size_flags_horizontal = 2
+size_flags_vertical = 3
+
+[node name="TileImage" type="TextureRect" parent="CityView/Body/TileInfo"]
+margin_right = 120.0
+margin_bottom = 140.0
+texture = ExtResource( 4 )
+
+[node name="TilePosition" type="Label" parent="CityView/Body/TileInfo"]
+margin_top = 144.0
+margin_right = 120.0
+margin_bottom = 165.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+
+[node name="infrastructure" type="VBoxContainer" parent="CityView/Body"]
+margin_left = 236.0
+margin_right = 392.0
+margin_bottom = 165.0
+size_flags_horizontal = 2
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="CityView/Body/infrastructure"]
+margin_right = 156.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 3 )
+text = "INFRASTRUCTURE"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CityView/Body/infrastructure"]
+margin_top = 31.0
+margin_right = 156.0
+margin_bottom = 87.0
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="CityView/Body/infrastructure/HBoxContainer"]
+margin_right = 48.0
+margin_bottom = 56.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource( 2 )
+
+[node name="Label" type="Label" parent="CityView/Body/infrastructure/HBoxContainer"]
+margin_left = 52.0
+margin_top = 17.0
+margin_right = 52.0
+margin_bottom = 38.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+valign = 1
+
+[node name="Actions" type="VBoxContainer" parent="CityView/Body"]
+margin_left = 472.0
+margin_right = 563.0
+margin_bottom = 138.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 10
+
+[node name="TradeButton" type="Button" parent="CityView/Body/Actions"]
+margin_right = 71.0
+margin_bottom = 27.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "TRADE"
+
+[node name="QuestButton" type="Button" parent="CityView/Body/Actions"]
+margin_top = 37.0
+margin_right = 80.0
+margin_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "QUESTS"
+
+[node name="PoliciesButton" type="Button" parent="CityView/Body/Actions"]
+margin_top = 74.0
+margin_right = 91.0
+margin_bottom = 101.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "POLICIES"
+
+[node name="StatsButton" type="Button" parent="CityView/Body/Actions"]
+margin_top = 111.0
+margin_right = 65.0
+margin_bottom = 138.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "STATS"
+
+[node name="ResearchView" type="VBoxContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="HBoxContainer" parent="ResearchView"]
+margin_right = 279.0
+margin_bottom = 60.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 0
+
+[node name="Title" type="Label" parent="ResearchView/Header"]
+margin_right = 279.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "RESEARCH"
+
+[node name="Body" type="HBoxContainer" parent="ResearchView"]
+margin_top = 80.0
+margin_right = 704.0
+margin_bottom = 218.0
+
+[node name="Actions" type="VBoxContainer" parent="ResearchView/Body"]
+margin_right = 91.0
+margin_bottom = 138.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 10
+
+[node name="TradeButton" type="Button" parent="ResearchView/Body/Actions"]
+margin_right = 71.0
+margin_bottom = 27.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "TRADE"
+
+[node name="QuestButton" type="Button" parent="ResearchView/Body/Actions"]
+margin_top = 37.0
+margin_right = 80.0
+margin_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "QUESTS"
+
+[node name="PoliciesButton" type="Button" parent="ResearchView/Body/Actions"]
+margin_top = 74.0
+margin_right = 91.0
+margin_bottom = 101.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "POLICIES"
+
+[node name="StatsButton" type="Button" parent="ResearchView/Body/Actions"]
+margin_top = 111.0
+margin_right = 65.0
+margin_bottom = 138.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "STATS"
+[connection signal="pressed" from="TileView/Body/Actions/BuyButton" to="." method="_on_BuyButton_pressed"]
+[connection signal="pressed" from="TileView/Body/Actions/BuildButton" to="." method="_on_BuildButton_pressed"]

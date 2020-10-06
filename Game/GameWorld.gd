@@ -14,7 +14,8 @@ var firestore_users
 onready var _tilemap = $Navigation2D/TileMap
 onready var _tilemap_obj = $Navigation2D/TileMapObj
 onready var _tilemap_img = $Navigation2D/TileMapImg
-onready var _tile_view = preload("res://Game/ui/TileView.tscn")
+onready var _tilemap_community = $Navigation2D/TileMapCommunity
+onready var _popup = preload("res://Game/ui/Popups.tscn")
 
 export var size_units = Vector2(32,18)
 
@@ -31,6 +32,18 @@ const ressource = {
 	7: "stone",
 	8: "",
 	9: "",
+}
+const infrastructure = {
+	0: "airport",
+	1: "trainstation",
+	2: "seaport",
+	3: "highway",
+	4: "power plant",
+	5: "purification plant",
+	6: "garbage disposal",
+	7: "cinema",
+	8: "zoo",
+	9: "museum",
 }
 
 func _ready() -> void:
@@ -49,20 +62,24 @@ func _ready() -> void:
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
-		if event.pressed and not $CanvasLayer/TileView.visible and Input.is_action_pressed("main_click"):
+		if event.pressed and not $CanvasLayer/Popup.visible and Input.is_action_pressed("main_click"):
 			var pos = event.position
 			var camera_pos = $KinematicBody2D.position
 			tile_pos = getSelectedHexagon(pos + camera_pos)
 			var tile_index = _tilemap.get_cell(tile_pos.x, tile_pos.y)
 			#var resource_index = d[str(tile_pos.x)][str(tile_pos.y)].ressource
-			print(pos,"tile_pos",tile_pos)
-			$CanvasLayer/TileView.popup()
-			$CanvasLayer/TileView/Content/Body/TileInfo/TileImage.texture = _tilemap.tile_set.tile_get_texture(tile_index)
-			$CanvasLayer/TileView/Content/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
-			#$CanvasLayer/TileView/Content/Body/Ressources/HBoxContainer/TextureRect.texture = _tilemap_img.tile_set.tile_get_texture(int(resource_index))
-			#$CanvasLayer/TileView/Content/Body/Ressources/HBoxContainer/Label.text = ressource[int(resource_index)]
-			#Debug Hex Cells
-			#$Navigation2D/TileMap.set_cell(tile_pos.x,tile_pos.y,tile_index+1)
+			if _tilemap_community.get_cell(tile_pos.x, tile_pos.y) != -1:
+				$CanvasLayer/Popup.view_city()
+				print()
+			else:
+				print(pos,"tile_pos",tile_pos)
+				$CanvasLayer/Popup.view_tile()
+				$CanvasLayer/Popup/TileView/Body/TileInfo/TileImage.texture = _tilemap.tile_set.tile_get_texture(tile_index)
+				$CanvasLayer/Popup/TileView/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
+				#$CanvasLayer/Popup/TileView/Body/Ressources/HBoxContainer/TextureRect.texture = _tilemap_img.tile_set.tile_get_texture(int(resource_index))
+				#$CanvasLayer/Popup/TileView/Body/Ressources/HBoxContainer/Label.text = ressource[int(resource_index)]
+				#Debug Hex Cells
+				#$Navigation2D/TileMap.set_cell(tile_pos.x,tile_pos.y,tile_index+1)
 
 func on_received_new_map(data):
 	if data.data:            
