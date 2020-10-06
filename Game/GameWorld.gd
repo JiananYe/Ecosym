@@ -84,13 +84,13 @@ func _unhandled_input(event):
 func on_received_new_map(data):
 	if data.data:            
 		d.map_data = data.data
-		print("keyyyy ", data.key, " data", data.data[0][0], data.data)
+		#print("keyyyy ", data.key, " data", data.data[0][0], data.data)
 		load_map()
 		
 func on_received_updated_map(data):
 	if data.data:
 		d.map_data = data.data
-		print("keyyyy ", data.key, " data", data.data[0][0], data.data)
+		#print("keyyyy ", data.key, " data", data.data[0][0], data.data)
 		load_map()
 
 func on_error_received(code,status,message):

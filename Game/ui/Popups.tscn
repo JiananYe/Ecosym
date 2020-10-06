@@ -1,10 +1,16 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://interface/font/monster48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Game/assets/world/Tiles/Terrain/Grass/grass_05.png" type="Texture" id=2]
 [ext_resource path="res://interface/font/monster16.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Game/assets/world/Tiles/Modern/modern_skyscraper.png" type="Texture" id=4]
 [ext_resource path="res://Game/ui/Popups.gd" type="Script" id=5]
+[ext_resource path="res://Game/assets/ui/1x/fastForward.png" type="Texture" id=6]
+[ext_resource path="res://Game/assets/ui/1x/arrowUp.png" type="Texture" id=7]
+[ext_resource path="res://Game/assets/ui/1x/unlocked.png" type="Texture" id=8]
+[ext_resource path="res://Game/ui/ResearchView.gd" type="Script" id=9]
+[ext_resource path="res://Game/assets/ui/1xWhite/fastForward.png" type="Texture" id=10]
+[ext_resource path="res://Game/assets/ui/1xWhite/arrowUp.png" type="Texture" id=11]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 816, 0, 48, 56 )
@@ -13,6 +19,7 @@ region = Rect2( 816, 0, 48, 56 )
 region = Rect2( 816, 0, 48, 56 )
 
 [node name="Popup" type="WindowDialog"]
+visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -292,16 +299,16 @@ custom_fonts/font = ExtResource( 3 )
 text = "STATS"
 
 [node name="ResearchView" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
 margin_top = 10.0
-margin_right = -10.0
+margin_right = -9.99994
 margin_bottom = -10.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_constants/separation = 20
+custom_constants/separation = 10
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -320,51 +327,918 @@ size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
 text = "RESEARCH"
 
-[node name="Body" type="HBoxContainer" parent="ResearchView"]
-margin_top = 80.0
+[node name="ScrollContainer" type="ScrollContainer" parent="ResearchView"]
+margin_top = 70.0
 margin_right = 704.0
-margin_bottom = 218.0
+margin_bottom = 280.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Actions" type="VBoxContainer" parent="ResearchView/Body"]
-margin_right = 91.0
-margin_bottom = 138.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-custom_constants/separation = 10
+[node name="ResearchTree" type="VBoxContainer" parent="ResearchView/ScrollContainer"]
+margin_right = 692.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 0, 50 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="TradeButton" type="Button" parent="ResearchView/Body/Actions"]
-margin_right = 71.0
-margin_bottom = 27.0
+[node name="1" type="HBoxContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_right = 692.0
+margin_bottom = 50.0
+custom_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/1"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_fonts/font = ExtResource( 3 )
-text = "TRADE"
 
-[node name="QuestButton" type="Button" parent="ResearchView/Body/Actions"]
-margin_top = 37.0
-margin_right = 80.0
-margin_bottom = 64.0
+[node name="MarginContainer2" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/1"]
+margin_left = 50.0
+margin_right = 100.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="MarginContainer3" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/1"]
+margin_left = 100.0
+margin_right = 150.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_fonts/font = ExtResource( 3 )
-text = "QUESTS"
 
-[node name="PoliciesButton" type="Button" parent="ResearchView/Body/Actions"]
-margin_top = 74.0
-margin_right = 91.0
-margin_bottom = 101.0
+[node name="MarginContainer4" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/1"]
+margin_left = 150.0
+margin_right = 200.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_fonts/font = ExtResource( 3 )
-text = "POLICIES"
 
-[node name="StatsButton" type="Button" parent="ResearchView/Body/Actions"]
-margin_top = 111.0
-margin_right = 65.0
-margin_bottom = 138.0
+[node name="MarginContainer5" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/1"]
+margin_left = 200.0
+margin_right = 250.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_fonts/font = ExtResource( 3 )
-text = "STATS"
+
+[node name="MarginContainer6" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/1"]
+margin_left = 250.0
+margin_right = 300.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="1A" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/1" groups=[
+"Research",
+]]
+margin_left = 300.0
+margin_right = 350.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/1/1A" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+hint_tooltip = "Productionspeed +1%"
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 6 )
+texture_disabled = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_top = 50.0
+margin_right = 692.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="2" type="HBoxContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_top = 100.0
+margin_right = 692.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 0, 50 )
+custom_constants/separation = 0
+
+[node name="MarginContainer7" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/2"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="MarginContainer8" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/2"]
+margin_left = 50.0
+margin_right = 100.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="MarginContainer9" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/2"]
+margin_left = 100.0
+margin_right = 150.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="2A" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/2" groups=[
+"Research",
+]]
+margin_left = 150.0
+margin_right = 200.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/2/2A" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+hint_tooltip = "Productionoutput +1%"
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 7 )
+texture_disabled = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer10" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/2"]
+margin_left = 200.0
+margin_right = 250.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="MarginContainer11" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/2"]
+margin_left = 250.0
+margin_right = 300.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="MarginContainer12" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/2"]
+margin_left = 300.0
+margin_right = 350.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer13" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/2"]
+margin_left = 350.0
+margin_right = 400.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer14" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/2"]
+margin_left = 400.0
+margin_right = 450.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2B" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/2" groups=[
+"Research",
+]]
+margin_left = 450.0
+margin_right = 500.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/2/2B" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -26.5874
+margin_top = -26.5874
+margin_right = 23.4126
+margin_bottom = 23.4126
+hint_tooltip = "Productionoutput +1%"
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 7 )
+texture_disabled = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_top = 150.0
+margin_right = 692.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="3" type="HBoxContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_top = 200.0
+margin_right = 692.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 0, 50 )
+custom_constants/separation = 0
+
+[node name="MarginContainer15" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/3"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer16" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/3"]
+margin_left = 50.0
+margin_right = 100.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3A" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/3" groups=[
+"Research",
+]]
+margin_left = 100.0
+margin_right = 150.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/3/3A" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer17" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/3"]
+margin_left = 150.0
+margin_right = 200.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3B" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/3" groups=[
+"Research",
+]]
+margin_left = 200.0
+margin_right = 250.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/3/3B" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer18" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/3"]
+margin_left = 250.0
+margin_right = 300.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer19" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/3"]
+margin_left = 300.0
+margin_right = 350.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer20" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/3"]
+margin_left = 350.0
+margin_right = 400.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3C" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/3" groups=[
+"Research",
+]]
+margin_left = 400.0
+margin_right = 450.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/3/3C" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer21" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/3"]
+margin_left = 450.0
+margin_right = 500.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3D" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/3" groups=[
+"Research",
+]]
+margin_left = 500.0
+margin_right = 550.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/3/3D" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer22" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/3"]
+margin_left = 550.0
+margin_right = 600.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer3" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_top = 250.0
+margin_right = 692.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="4" type="HBoxContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_top = 300.0
+margin_right = 692.0
+margin_bottom = 350.0
+rect_min_size = Vector2( 0, 50 )
+custom_constants/separation = 0
+
+[node name="MarginContainer23" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/4"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4A" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/4" groups=[
+"Research",
+]]
+margin_left = 50.0
+margin_right = 100.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/4/4A" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer24" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/4"]
+margin_left = 100.0
+margin_right = 150.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4B" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/4" groups=[
+"Research",
+]]
+margin_left = 150.0
+margin_right = 200.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/4/4B" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer25" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/4"]
+margin_left = 200.0
+margin_right = 250.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4C" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/4" groups=[
+"Research",
+]]
+margin_left = 250.0
+margin_right = 300.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/4/4C" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer26" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/4"]
+margin_left = 300.0
+margin_right = 350.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4D" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/4" groups=[
+"Research",
+]]
+margin_left = 350.0
+margin_right = 400.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/4/4D" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer27" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/4"]
+margin_left = 400.0
+margin_right = 450.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4E" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/4" groups=[
+"Research",
+]]
+margin_left = 450.0
+margin_right = 500.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/4/4E" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer28" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/4"]
+margin_left = 500.0
+margin_right = 550.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4F" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/4" groups=[
+"Research",
+]]
+margin_left = 550.0
+margin_right = 600.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/4/4F" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer4" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_top = 350.0
+margin_right = 692.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="5" type="HBoxContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_top = 400.0
+margin_right = 692.0
+margin_bottom = 450.0
+rect_min_size = Vector2( 0, 50 )
+custom_constants/separation = 0
+
+[node name="MarginContainer29" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/5"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5A" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/5" groups=[
+"Research",
+]]
+margin_left = 50.0
+margin_right = 100.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/5/5A" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer30" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/5"]
+margin_left = 100.0
+margin_right = 150.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5B" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/5" groups=[
+"Research",
+]]
+margin_left = 150.0
+margin_right = 200.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/5/5B" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer31" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/5"]
+margin_left = 200.0
+margin_right = 250.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5C" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/5" groups=[
+"Research",
+]]
+margin_left = 250.0
+margin_right = 300.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/5/5C" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer32" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/5"]
+margin_left = 300.0
+margin_right = 350.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5D" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/5" groups=[
+"Research",
+]]
+margin_left = 350.0
+margin_right = 400.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/5/5D" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer33" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/5"]
+margin_left = 400.0
+margin_right = 450.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5E" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/5" groups=[
+"Research",
+]]
+margin_left = 450.0
+margin_right = 500.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/5/5E" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer34" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree/5"]
+margin_left = 500.0
+margin_right = 550.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5F" type="Panel" parent="ResearchView/ScrollContainer/ResearchTree/5" groups=[
+"Research",
+]]
+margin_left = 550.0
+margin_right = 600.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureButton" type="TextureButton" parent="ResearchView/ScrollContainer/ResearchTree/5/5F" groups=[
+"ResearchButtons",
+]]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer5" type="MarginContainer" parent="ResearchView/ScrollContainer/ResearchTree"]
+margin_top = 450.0
+margin_right = 692.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 0, 50 )
 [connection signal="pressed" from="TileView/Body/Actions/BuyButton" to="." method="_on_BuyButton_pressed"]
 [connection signal="pressed" from="TileView/Body/Actions/BuildButton" to="." method="_on_BuildButton_pressed"]
