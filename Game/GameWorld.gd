@@ -66,20 +66,24 @@ func _unhandled_input(event):
 			var pos = event.position
 			var camera_pos = $KinematicBody2D.position
 			tile_pos = getSelectedHexagon(pos + camera_pos)
-			var tile_index = _tilemap.get_cell(tile_pos.x, tile_pos.y)
-			#var resource_index = d[str(tile_pos.x)][str(tile_pos.y)].ressource
+
 			if _tilemap_community.get_cell(tile_pos.x, tile_pos.y) != -1:
 				$CanvasLayer/Popup.view_city()
-				print()
+				$CanvasLayer/Popup/CityView/Body/TileInfo/TileImage.texture = _tilemap_community.tile_set.tile_get_texture(_tilemap_community.get_cell(tile_pos.x, tile_pos.y))
+				$CanvasLayer/Popup/CityView/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
 			else:
-				print(pos,"tile_pos",tile_pos)
-				$CanvasLayer/Popup.view_tile()
-				$CanvasLayer/Popup/TileView/Body/TileInfo/TileImage.texture = _tilemap.tile_set.tile_get_texture(tile_index)
-				$CanvasLayer/Popup/TileView/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
-				#$CanvasLayer/Popup/TileView/Body/Ressources/HBoxContainer/TextureRect.texture = _tilemap_img.tile_set.tile_get_texture(int(resource_index))
-				#$CanvasLayer/Popup/TileView/Body/Ressources/HBoxContainer/Label.text = ressource[int(resource_index)]
-				#Debug Hex Cells
-				#$Navigation2D/TileMap.set_cell(tile_pos.x,tile_pos.y,tile_index+1)
+				if _tilemap_obj.get_cell(tile_pos.x, tile_pos.y) != -1:
+					$CanvasLayer/Popup.view_building()
+					$CanvasLayer/Popup/BuildingView/Body/TileInfo/TileImage.texture = _tilemap_obj.tile_set.tile_get_texture(_tilemap_obj.get_cell(tile_pos.x, tile_pos.y))
+					$CanvasLayer/Popup/BuildingView/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
+				else:
+					print(pos,"tile_pos",tile_pos)
+					$CanvasLayer/Popup.view_tile()
+					$CanvasLayer/Popup/TileView/Body/TileInfo/TileImage.texture = _tilemap.tile_set.tile_get_texture(_tilemap.get_cell(tile_pos.x, tile_pos.y))
+					$CanvasLayer/Popup/TileView/Body/TileInfo/TilePosition.text = str(tile_pos.x) + ", " + str(tile_pos.y)
+					var resource_index = d.map_data[tile_pos.x][tile_pos.y].ressource
+					$CanvasLayer/Popup/TileView/Body/Ressources/HBoxContainer/TextureRect.texture = _tilemap_img.tile_set.tile_get_texture(int(resource_index))
+					$CanvasLayer/Popup/TileView/Body/Ressources/HBoxContainer/Label.text = ressource[int(resource_index)]
 
 func on_received_new_map(data):
 	if data.data:            
@@ -150,8 +154,9 @@ func set_tile_owner():
 	listener_map_data.put(d)
 	#firestore_map_data.update("world", {"fields": d})
 	Local.set_credit(-150)
-	#cloud function für credits setzen/ builden
-	firestore_users.update(Local.userdata.local_id, {"fields": Local.profile})
+	#$HTTPRequest.test(tile_pos)
+	$HTTPRequest.addOwner(tile_pos)
+	#firestore_users.update(Local.userdata.local_id, {"fields": Local.profile})
 
 func set_map_obj(cell):
 	if d.map_data[tile_pos.x][tile_pos.y].owner == Local.userdata.local_id:
@@ -161,8 +166,8 @@ func set_map_obj(cell):
 		#firestore_map_data.update("world", {"fields": d})
 		#weiterer http node wird benötigt. sonst wird nur der erste request abgeschickt
 		Local.set_credit(-100)
-		#cloud function für credits setzen/ builden
-		firestore_users.update(Local.userdata.local_id, {"fields": Local.profile})
+		$HTTPRequest.addBuilding(tile_pos, cell)
+		#firestore_users.update(Local.userdata.local_id, {"fields": Local.profile})
 	else:
 		print("You have to own the tile first")
 

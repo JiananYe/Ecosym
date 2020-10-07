@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://interface/font/monster48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Game/assets/world/Tiles/Terrain/Grass/grass_05.png" type="Texture" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://Game/ui/ResearchView.gd" type="Script" id=9]
 [ext_resource path="res://Game/assets/ui/1xWhite/fastForward.png" type="Texture" id=10]
 [ext_resource path="res://Game/assets/ui/1xWhite/arrowUp.png" type="Texture" id=11]
+[ext_resource path="res://Game/ui/Buy.gd" type="Script" id=12]
+[ext_resource path="res://Game/ui/Active Offer.gd" type="Script" id=13]
+[ext_resource path="res://Game/ui/Sell.gd" type="Script" id=14]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 816, 0, 48, 56 )
@@ -37,7 +40,6 @@ __meta__ = {
 }
 
 [node name="TileView" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -166,6 +168,163 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 3 )
 text = "BUILD"
+
+[node name="Explore" type="VBoxContainer" parent="TileView/Body"]
+visible = false
+margin_left = 531.0
+margin_right = 598.0
+margin_bottom = 64.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 10
+
+[node name="StartButton" type="Button" parent="TileView/Body/Explore"]
+margin_right = 67.0
+margin_bottom = 27.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "START"
+
+[node name="BackButton" type="Button" parent="TileView/Body/Explore"]
+margin_top = 37.0
+margin_right = 55.0
+margin_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "BACK"
+
+[node name="BuildingView" type="VBoxContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="HBoxContainer" parent="BuildingView"]
+margin_right = 554.0
+margin_bottom = 60.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 0
+
+[node name="Title" type="Label" parent="BuildingView/Header"]
+margin_right = 554.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "BUILDING OVERVIEW"
+
+[node name="Body" type="HBoxContainer" parent="BuildingView"]
+margin_top = 80.0
+margin_right = 704.0
+margin_bottom = 245.0
+
+[node name="TileInfo" type="VBoxContainer" parent="BuildingView/Body"]
+margin_right = 120.0
+margin_bottom = 165.0
+size_flags_horizontal = 2
+size_flags_vertical = 3
+
+[node name="TileImage" type="TextureRect" parent="BuildingView/Body/TileInfo"]
+margin_right = 120.0
+margin_bottom = 140.0
+texture = ExtResource( 2 )
+
+[node name="TilePosition" type="Label" parent="BuildingView/Body/TileInfo"]
+margin_top = 144.0
+margin_right = 120.0
+margin_bottom = 165.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+
+[node name="Info" type="VBoxContainer" parent="BuildingView/Body"]
+margin_left = 236.0
+margin_right = 288.0
+margin_bottom = 165.0
+size_flags_horizontal = 2
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="BuildingView/Body/Info"]
+margin_right = 52.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 3 )
+text = "Info"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BuildingView/Body/Info"]
+margin_top = 31.0
+margin_right = 52.0
+margin_bottom = 87.0
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="BuildingView/Body/Info/HBoxContainer"]
+margin_right = 48.0
+margin_bottom = 56.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource( 1 )
+
+[node name="Label" type="Label" parent="BuildingView/Body/Info/HBoxContainer"]
+margin_left = 52.0
+margin_top = 17.0
+margin_right = 52.0
+margin_bottom = 38.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+valign = 1
+
+[node name="Actions" type="VBoxContainer" parent="BuildingView/Body"]
+margin_left = 472.0
+margin_right = 573.0
+margin_bottom = 138.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 10
+
+[node name="UpgradeButton" type="Button" parent="BuildingView/Body/Actions"]
+margin_right = 98.0
+margin_bottom = 27.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "UPGRADE"
+
+[node name="BoostButton" type="Button" parent="BuildingView/Body/Actions"]
+margin_top = 37.0
+margin_right = 72.0
+margin_bottom = 64.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "BOOST"
+
+[node name="StopButton" type="Button" parent="BuildingView/Body/Actions"]
+margin_top = 74.0
+margin_right = 58.0
+margin_bottom = 101.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "STOP"
+
+[node name="DemolishButton" type="Button" parent="BuildingView/Body/Actions"]
+margin_top = 111.0
+margin_right = 101.0
+margin_bottom = 138.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "DEMOLISh"
 
 [node name="CityView" type="VBoxContainer" parent="."]
 visible = false
@@ -298,7 +457,8 @@ size_flags_vertical = 0
 custom_fonts/font = ExtResource( 3 )
 text = "STATS"
 
-[node name="ResearchView" type="VBoxContainer" parent="."]
+[node name="TradeView" type="VBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -307,7 +467,105 @@ margin_right = -9.99994
 margin_bottom = -10.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_constants/separation = 10
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="HBoxContainer" parent="TradeView"]
+margin_right = 176.0
+margin_bottom = 60.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 0
+
+[node name="Title" type="Label" parent="TradeView/Header"]
+margin_right = 176.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "TRADE"
+
+[node name="TabContainer" type="TabContainer" parent="TradeView"]
+margin_top = 60.0
+margin_right = 704.0
+margin_bottom = 280.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 3 )
+tab_align = 0
+
+[node name="Global" type="Tabs" parent="TradeView/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 39.0
+margin_right = -4.0
+margin_bottom = -4.0
+rect_min_size = Vector2( 0, 150 )
+script = ExtResource( 12 )
+
+[node name="GlobalTree" type="Tree" parent="TradeView/TabContainer/Global"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Local" type="Tabs" parent="TradeView/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 39.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 14 )
+
+[node name="LocalTree" type="Tree" parent="TradeView/TabContainer/Local"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Active Offer" type="Tabs" parent="TradeView/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 39.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 13 )
+
+[node name="OfferTree" type="Tree" parent="TradeView/TabContainer/Active Offer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResearchView" type="VBoxContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -9.99994
+margin_bottom = -10.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 25
 script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -328,14 +586,14 @@ custom_fonts/font = ExtResource( 1 )
 text = "RESEARCH"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ResearchView"]
-margin_top = 70.0
+margin_top = 85.0
 margin_right = 704.0
 margin_bottom = 280.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ResearchTree" type="VBoxContainer" parent="ResearchView/ScrollContainer"]
-margin_right = 692.0
+margin_right = 704.0
 margin_bottom = 500.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
@@ -1241,4 +1499,7 @@ margin_right = 692.0
 margin_bottom = 500.0
 rect_min_size = Vector2( 0, 50 )
 [connection signal="pressed" from="TileView/Body/Actions/BuyButton" to="." method="_on_BuyButton_pressed"]
+[connection signal="pressed" from="TileView/Body/Actions/ExploreButton" to="." method="_on_ExploreButton_pressed"]
 [connection signal="pressed" from="TileView/Body/Actions/BuildButton" to="." method="_on_BuildButton_pressed"]
+[connection signal="pressed" from="TileView/Body/Explore/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="pressed" from="CityView/Body/Actions/TradeButton" to="." method="_on_TradeButton_pressed"]

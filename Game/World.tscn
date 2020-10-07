@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Game/tileset/terrain_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Game/GameWorld.gd" type="Script" id=2]
 [ext_resource path="res://Game/ui/Popups.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Game/CloudFunction.gd" type="Script" id=4]
 [ext_resource path="res://interface/font/monster16.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Game/CanvasLayer.gd" type="Script" id=6]
 [ext_resource path="res://Game/ui/BuildMenu.tscn" type="PackedScene" id=7]
@@ -57,7 +58,7 @@ cell_size = Vector2( 120, 104 )
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 cell_half_offset = 0
 format = 1
-tile_data = PoolIntArray( 131076, 4, 0 )
+tile_data = PoolIntArray( 131076, 4, 0, 196611, 8, 0, 196612, 6, 0 )
 
 [node name="TileMapImg" type="TileMap" parent="Navigation2D"]
 tile_set = ExtResource( 10 )
@@ -78,31 +79,56 @@ smoothing_enabled = true
 script = ExtResource( 6 )
 
 [node name="Popup" parent="CanvasLayer" instance=ExtResource( 3 )]
+visible = false
 
 [node name="Settings" parent="CanvasLayer" instance=ExtResource( 12 )]
 
-[node name="SettingsButton" type="Button" parent="CanvasLayer"]
+[node name="BuildMenu" parent="CanvasLayer" instance=ExtResource( 7 )]
+
+[node name="PlayerUI" parent="CanvasLayer" instance=ExtResource( 9 )]
+
+[node name="UtilButtons" type="VBoxContainer" parent="CanvasLayer"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 12.0
-margin_bottom = 20.0
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer/UtilButtons"]
+margin_right = 106.0
+margin_bottom = 27.0
 custom_fonts/font = ExtResource( 5 )
 text = "SETTINGS"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Research" type="Button" parent="CanvasLayer"]
-margin_left = 10.0
-margin_top = 50.0
+[node name="Research" type="Button" parent="CanvasLayer/UtilButtons"]
+margin_top = 37.0
+margin_right = 106.0
+margin_bottom = 64.0
 custom_fonts/font = ExtResource( 5 )
 text = "RESEARCH"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BuildMenu" parent="CanvasLayer" instance=ExtResource( 7 )]
+[node name="Trade" type="Button" parent="CanvasLayer/UtilButtons"]
+margin_top = 74.0
+margin_right = 106.0
+margin_bottom = 101.0
+custom_fonts/font = ExtResource( 5 )
+text = "TRADE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="PlayerUI" parent="CanvasLayer" instance=ExtResource( 9 )]
-[connection signal="pressed" from="CanvasLayer/SettingsButton" to="CanvasLayer" method="_on_SettingsButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/Research" to="CanvasLayer" method="_on_Research_pressed"]
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+script = ExtResource( 4 )
+[connection signal="pressed" from="CanvasLayer/UtilButtons/SettingsButton" to="CanvasLayer" method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/UtilButtons/Research" to="CanvasLayer" method="_on_Research_pressed"]
+[connection signal="pressed" from="CanvasLayer/UtilButtons/Trade" to="CanvasLayer" method="_on_Trade_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="HTTPRequest" method="_on_HTTPRequest_request_completed"]

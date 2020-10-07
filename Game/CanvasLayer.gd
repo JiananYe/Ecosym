@@ -16,3 +16,6 @@ func _on_SettingsButton_pressed():
 
 func _on_Research_pressed():
 	$Popup.view_research()
+
+func _on_Trade_pressed():
+	$Popup.view_trade()
