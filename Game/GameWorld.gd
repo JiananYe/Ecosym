@@ -59,6 +59,7 @@ func _ready() -> void:
 	#firestore_map_data.connect("get_document", self, "_on_get_doc_received")
 	#firestore_map_data.connect("error", self, "on_error_received")
 	#firestore_map_data.get("world")
+	$CanvasLayer/Minesweeper.popup()
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:

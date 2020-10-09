@@ -57,3 +57,7 @@ func view_research():
 	$CityView.visible = false
 	$TradeView.visible = false
 	$ResearchView.visible = true
+
+
+func _on_StartButton_pressed():
+	pass

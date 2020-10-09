@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Game/tileset/terrain_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Game/GameWorld.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Game/tileset/objects.tres" type="TileSet" id=10]
 [ext_resource path="res://Game/tileset/community.tres" type="TileSet" id=11]
 [ext_resource path="res://Game/ui/Settings.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Game/Minigame/Minesweeper.tscn" type="PackedScene" id=13]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -78,8 +79,10 @@ smoothing_enabled = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource( 6 )
 
+[node name="Minesweeper" parent="CanvasLayer" instance=ExtResource( 13 )]
+visible = true
+
 [node name="Popup" parent="CanvasLayer" instance=ExtResource( 3 )]
-visible = false
 
 [node name="Settings" parent="CanvasLayer" instance=ExtResource( 12 )]
 

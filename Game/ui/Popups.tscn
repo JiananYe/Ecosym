@@ -15,12 +15,12 @@
 [ext_resource path="res://Game/ui/Active Offer.gd" type="Script" id=13]
 [ext_resource path="res://Game/ui/Sell.gd" type="Script" id=14]
 
-[sub_resource type="AnimatedTexture" id=3]
-
-[sub_resource type="AtlasTexture" id=1]
-region = Rect2( 816, 0, 48, 56 )
+[sub_resource type="AnimatedTexture" id=1]
 
 [sub_resource type="AtlasTexture" id=2]
+region = Rect2( 816, 0, 48, 56 )
+
+[sub_resource type="AtlasTexture" id=3]
 region = Rect2( 816, 0, 48, 56 )
 
 [node name="Popup" type="WindowDialog"]
@@ -117,7 +117,7 @@ margin_bottom = 50.0
 rect_min_size = Vector2( 50, 50 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = SubResource( 3 )
+texture = SubResource( 1 )
 expand = true
 
 [node name="Label" type="Label" parent="TileView/Body/Ressources/HBoxContainer"]
@@ -275,7 +275,7 @@ margin_right = 48.0
 margin_bottom = 56.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = SubResource( 1 )
+texture = SubResource( 2 )
 
 [node name="Label" type="Label" parent="BuildingView/Body/Info/HBoxContainer"]
 margin_left = 52.0
@@ -406,7 +406,7 @@ margin_right = 48.0
 margin_bottom = 56.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = SubResource( 2 )
+texture = SubResource( 3 )
 
 [node name="Label" type="Label" parent="CityView/Body/infrastructure/HBoxContainer"]
 margin_left = 52.0
@@ -1504,5 +1504,6 @@ rect_min_size = Vector2( 0, 50 )
 [connection signal="pressed" from="TileView/Body/Actions/BuyButton" to="." method="_on_BuyButton_pressed"]
 [connection signal="pressed" from="TileView/Body/Actions/ExploreButton" to="." method="_on_ExploreButton_pressed"]
 [connection signal="pressed" from="TileView/Body/Actions/BuildButton" to="." method="_on_BuildButton_pressed"]
+[connection signal="pressed" from="TileView/Body/Explore/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="TileView/Body/Explore/BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="pressed" from="CityView/Body/Actions/TradeButton" to="." method="_on_TradeButton_pressed"]
