@@ -22,14 +22,14 @@ export var size_units = Vector2(32,18)
 const CUSTOM_OFFSET_X = 0
 const CUSTOM_OFFSET_Y = 36
 const ressource = {
-	0: "can",
-	1: "cargo",
-	2: "crystal",
-	3: "wheat",
-	4: "wood",
-	5: "oil",
-	6: "coal",
-	7: "stone",
+	0: "coal",
+	1: "copper",
+	2: "gold",
+	3: "iron",
+	4: "silver",
+	5: "sand",
+	6: "stone",
+	7: "wood",
 	8: "",
 	9: "",
 }
