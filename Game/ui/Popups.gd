@@ -60,4 +60,4 @@ func view_research():
 
 
 func _on_StartButton_pressed():
-	pass
+	get_tree().change_scene("res://Game/Minigame/Minesweeper.tscn")

@@ -1,0 +1,189 @@
+[gd_scene load_steps=38 format=2]
+
+[ext_resource path="res://Game/assets/minesweeper/Tiles/sand.jpg" type="Texture" id=1]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/redstone_sand.jpg" type="Texture" id=2]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/greystone.jpg" type="Texture" id=3]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/lava.jpg" type="Texture" id=4]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/gravel_stone.jpg" type="Texture" id=5]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/dirt.jpg" type="Texture" id=6]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/greystone_ruby.jpg" type="Texture" id=7]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/redstone.jpg" type="Texture" id=8]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/gravel_dirt.jpg" type="Texture" id=9]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/brick_red.jpg" type="Texture" id=10]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/glass.jpg" type="Texture" id=11]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/greystone_ruby_alt.jpg" type="Texture" id=12]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/leaves.jpg" type="Texture" id=13]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/brick_grey.jpg" type="Texture" id=14]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/greysand.jpg" type="Texture" id=15]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/ice.jpg" type="Texture" id=16]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/redsand.jpg" type="Texture" id=17]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/redstone_emerald_alt.jpg" type="Texture" id=18]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/redstone_emerald.jpg" type="Texture" id=19]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_coal.jpg" type="Texture" id=20]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_diamond.jpg" type="Texture" id=21]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_gold_alt.jpg" type="Texture" id=22]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_silver.jpg" type="Texture" id=23]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/trunk_top.jpg" type="Texture" id=24]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_coal_alt.jpg" type="Texture" id=25]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_silver_alt.jpg" type="Texture" id=26]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/snow.jpg" type="Texture" id=27]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_iron.jpg" type="Texture" id=28]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/trunk_side.jpg" type="Texture" id=29]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_gold.jpg" type="Texture" id=30]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone.jpg" type="Texture" id=31]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_iron_alt.jpg" type="Texture" id=32]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_browniron.jpg" type="Texture" id=33]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/wood.jpg" type="Texture" id=34]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_browniron_alt.jpg" type="Texture" id=35]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/stone_diamond_alt.jpg" type="Texture" id=36]
+[ext_resource path="res://Game/assets/minesweeper/Tiles/water.jpg" type="Texture" id=37]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="brick_grey" type="Sprite" parent="."]
+position = Vector2( 258.053, 215.775 )
+texture = ExtResource( 14 )
+
+[node name="brick_red" type="Sprite" parent="."]
+position = Vector2( 512.324, 115.126 )
+texture = ExtResource( 10 )
+
+[node name="dirt" type="Sprite" parent="."]
+position = Vector2( 648.995, 207.299 )
+texture = ExtResource( 6 )
+
+[node name="glass" type="Sprite" parent="."]
+position = Vector2( 541.989, 227.429 )
+texture = ExtResource( 11 )
+
+[node name="gravel_dirt" type="Sprite" parent="."]
+position = Vector2( 480.54, 244.381 )
+texture = ExtResource( 9 )
+
+[node name="gravel_stone" type="Sprite" parent="."]
+position = Vector2( 568.476, 343.97 )
+texture = ExtResource( 5 )
+
+[node name="greysand" type="Sprite" parent="."]
+position = Vector2( 588.605, 260.273 )
+texture = ExtResource( 15 )
+
+[node name="greystone" type="Sprite" parent="."]
+position = Vector2( 136.215, 442.5 )
+texture = ExtResource( 3 )
+
+[node name="greystone_ruby" type="Sprite" parent="."]
+position = Vector2( 69.4685, 390.587 )
+texture = ExtResource( 7 )
+
+[node name="greystone_ruby_alt" type="Sprite" parent="."]
+position = Vector2( 49.3387, 303.711 )
+texture = ExtResource( 12 )
+
+[node name="ice" type="Sprite" parent="."]
+position = Vector2( 28.1495, 239.083 )
+texture = ExtResource( 16 )
+
+[node name="lava" type="Sprite" parent="."]
+position = Vector2( 67.3496, 179.753 )
+texture = ExtResource( 4 )
+
+[node name="leaves" type="Sprite" parent="."]
+position = Vector2( 124.561, 140.553 )
+texture = ExtResource( 13 )
+
+[node name="redsand" type="Sprite" parent="."]
+position = Vector2( 536.692, 162.802 )
+texture = ExtResource( 17 )
+
+[node name="redstone" type="Sprite" parent="."]
+position = Vector2( 441.34, 120.424 )
+texture = ExtResource( 8 )
+
+[node name="redstone_emerald" type="Sprite" parent="."]
+position = Vector2( 341.75, 86.5207 )
+texture = ExtResource( 19 )
+
+[node name="redstone_emerald_alt" type="Sprite" parent="."]
+position = Vector2( 246.399, 69.5693 )
+texture = ExtResource( 18 )
+
+[node name="redstone_sand" type="Sprite" parent="."]
+position = Vector2( 289.837, 457.333 )
+texture = ExtResource( 2 )
+
+[node name="sand" type="Sprite" parent="."]
+position = Vector2( 193.426, 457.333 )
+texture = ExtResource( 1 )
+
+[node name="snow" type="Sprite" parent="."]
+position = Vector2( 408.497, 389.527 )
+texture = ExtResource( 27 )
+
+[node name="stone" type="Sprite" parent="."]
+position = Vector2( 99.1335, 333.376 )
+texture = ExtResource( 31 )
+
+[node name="stone_browniron" type="Sprite" parent="."]
+position = Vector2( 465.708, 339.732 )
+texture = ExtResource( 33 )
+
+[node name="stone_browniron_alt" type="Sprite" parent="."]
+position = Vector2( 209.318, 158.564 )
+texture = ExtResource( 35 )
+
+[node name="stone_coal" type="Sprite" parent="."]
+position = Vector2( 269.707, 285.7 )
+texture = ExtResource( 20 )
+
+[node name="stone_coal_alt" type="Sprite" parent="."]
+position = Vector2( 363.999, 154.326 )
+texture = ExtResource( 25 )
+
+[node name="stone_diamond" type="Sprite" parent="."]
+position = Vector2( 193.426, 257.094 )
+texture = ExtResource( 21 )
+
+[node name="stone_diamond_alt" type="Sprite" parent="."]
+position = Vector2( 153.166, 204.121 )
+texture = ExtResource( 36 )
+
+[node name="stone_gold" type="Sprite" parent="."]
+position = Vector2( 270.766, 144.791 )
+texture = ExtResource( 30 )
+
+[node name="stone_gold_alt" type="Sprite" parent="."]
+position = Vector2( 320.561, 224.251 )
+texture = ExtResource( 22 )
+
+[node name="stone_iron" type="Sprite" parent="."]
+position = Vector2( 330.096, 309.008 )
+texture = ExtResource( 28 )
+
+[node name="stone_iron_alt" type="Sprite" parent="."]
+position = Vector2( 228.388, 329.138 )
+texture = ExtResource( 32 )
+
+[node name="stone_silver" type="Sprite" parent="."]
+position = Vector2( 112.906, 252.856 )
+texture = ExtResource( 23 )
+
+[node name="stone_silver_alt" type="Sprite" parent="."]
+position = Vector2( 293.015, 388.468 )
+texture = ExtResource( 26 )
+
+[node name="trunk_side" type="Sprite" parent="."]
+position = Vector2( 176.474, 363.04 )
+texture = ExtResource( 29 )
+
+[node name="trunk_top" type="Sprite" parent="."]
+position = Vector2( 156.463, 94.0733 )
+texture = ExtResource( 24 )
+
+[node name="water" type="Sprite" parent="."]
+position = Vector2( 451.719, 181.38 )
+texture = ExtResource( 37 )
+
+[node name="wood" type="Sprite" parent="."]
+position = Vector2( 405.685, 252.813 )
+texture = ExtResource( 34 )
